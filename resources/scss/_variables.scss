@@ -71,13 +71,15 @@ $grid-gutter-width: 30px;
 //## Gray and brand colors for use across Bootstrap.
 
 
-$gray-darker:           #282d2f;
-$gray-dark:             #4D4F4D;
-$gray:                  #7a7f7f;
+$gray-darker:           #111;
+$gray-dark:             #383639;
+$gray:                  #484848;
 $gray-light:            #b2b1a7;
 $gray-lighter:          #dcdbd8;
 $gray-lighter2:         #f4f4f4;
 $gray-lightest:         #f7f7f9;
+
+$white:                 #fff;
 
 $brand-primary:         #008ebd;
 $brand-secondary:       #d4021d;
@@ -103,10 +105,10 @@ $availability_5:        $brand-danger;
 // ## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               white;
-//$body-color:            $gray-dark;
+$body-bg:               $gray-dark;
+$body-color:            white;
 //** Global text color on `<body>`.
-$text-color:            $gray-dark;
+$text-color:            white;
 
 //** Global textual link color.
 $link-color:            $brand-primary;

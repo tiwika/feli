@@ -1,4 +1,11 @@
 .breadcrumb{
 	margin-bottom: 0;
 	background-color: $gray-lightest;
+	padding:.5rem 0;
+	a {
+		color: $white;
+		&:hover {
+			color: $brand-primary;
+		}
+	}
 }
