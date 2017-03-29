@@ -1,3 +1,5 @@
+{{ performance.trackRuntime('PageDesign.Start') }}
+
 {% import "Ceres::PageDesign.Macros.IncludeComponents" as Loader %}
 {% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
 {{ component( "Ceres::PageDesign.Components.Notifications" ) }}
@@ -20,6 +22,7 @@
         {% block PartialHead %}
         {% endblock %}
     </head>
+    {{ performance.trackRuntime('PageDesign.AfterHeader') }}
 
     <body>
         <resource name="user" :data="{ isLoggedIn: {{ frontend.Account.getIsAccountLoggedIn | json_encode() }} }" ></resource>
@@ -35,6 +38,7 @@
                 :initial-notifications="{{ services.notifications.getNotifications() | json_encode() }}"
             ></notifications>
         </div>
+        {{ performance.trackRuntime('PageDesign.AfterJsonENCODE Data') }}
 
         <div class="wrapper wrapper-left">
           <!-- filters -->
@@ -104,8 +108,11 @@
         </div>
 
         {{ Loader.include_components() }}
+        {{ performance.trackRuntime('PageDesign.After include components') }}
 
         {{ LayoutContainer.show("Ceres::Script.Loader") }}
+        {{ performance.trackRuntime('PageDesign.After script loader') }}
+
 
         {% set lang = services.sessionStorage.getLang() %}
 
@@ -131,3 +138,4 @@
     </body>
 
 </html>
+{{ performance.trackRuntime('PageDesign.END') }}

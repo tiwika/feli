@@ -17,6 +17,7 @@
 
 {% set paginatedResult = services.itemLoader.loadForTemplate('Ceres::ItemList.ItemListView', itemLoaderPresets.search, {'query': request.get("query"), 'page': page, 'items': itemsPerPage, 'sorting':  sorting}) %}
 {% block PageBody %}
+    {{ performance.trackRuntime('ItemListView.Start') }}
 
     {{ component( "Ceres::ItemList.Components.ItemList" ) }}
     {{ component( "Ceres::ItemList.Components.ItemListSorting" ) }}
@@ -25,9 +26,15 @@
     {{ component( "Ceres::ItemList.Components.Filter.ItemFilterList") }}
     {{ component( "Ceres::ItemList.Components.Filter.ItemFilterTagList") }}
 
+    {{ performance.trackRuntime('ItemListView.AfterComponents') }}
+
+
     <resource name="itemList" :data="{{ paginatedResult | json_encode }} || {}"></resource>
     <resource name="facets" :data="{{ paginatedResult.facets | json_encode }} || []"></resource>
     <resource name="facetParams" :data="[]"></resource>
+
+    {{ performance.trackRuntime('ItemListView.AfterJSONEncode itemsList & Facets') }}
+
 
     <div class="categoriegrid page-content container-max">
         <div class="row m-t-1">
@@ -70,5 +77,8 @@
         </div>
 
     </div>
+
+    {{ performance.trackRuntime('ItemListView.END') }}
+
 
 {% endblock %}
