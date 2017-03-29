@@ -111,6 +111,7 @@
 
         </div>
 
+        {{ performance.trackRuntime('PageDesign.Before include components') }}
         {{ Loader.include_components() }}
         {{ performance.trackRuntime('PageDesign.After include components') }}
 
