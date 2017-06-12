@@ -5,12 +5,21 @@
 {% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
 
 {% set logData = config("Ceres.log.data")|split(', ') %}
-{% set defaultItemsPerPage = config("Ceres.pagination.defaultItemsPerPage") %}
 {% set sortValues = config("Ceres.sort.data")|split(', ') %}
+{% set defaultSorting = config('Ceres.sort.defaultSorting') %}
+{% set rowsPerPage = config('Ceres.pagination.rowsPerPage') | split(', ') %}
+{% set columnsPerPage = config('Ceres.pagination.columnsPerPage') %}
+{% set itemsPerPage = rowsPerPage[0] * columnsPerPage %}
+{% set performanceLevel = config('Ceres.log.performance.level') %}
+{% set itemName = config('Ceres.item.name') %}
 
 <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
 
-<link rel="stylesheet" href="{{ plugin_path('Ceres') }}/css/ceres.css">
+{% if LayoutContainer.show("Ceres::Template.StyleOverwrite") | trim is empty %}
+    <link rel="stylesheet" href="{{ plugin_path('Ceres') }}/css/ceres.css">
+{% endif %}
+
+{{ LayoutContainer.show("Ceres::Template.StyleOverwrite") }}
 
 <!-- Extend the existing style with a template -->
 {{ LayoutContainer.show("Ceres::Template.Style") }}
@@ -25,9 +34,13 @@
             printInfos:         {% if "print_infos" in logData or "all" in logData %}true{% else %}false{% endif %},
             printStackTrace:    {% if "print_stack_trace" in logData or "all" in logData %}true{% else %}false{% endif %},
             logMessages:        {% if "log_messages" in logData or "all" in logData %}true{% else %}false{% endif %},
-
-            defaultSorting: "{{ sortValues[0] }}",
-            defaultItemsPerPage: "{{ defaultItemsPerPage }}"
-        }
+            defaultItemsPerPage: "{{ itemsPerPage }}",
+            defaultSorting: "{{ defaultSorting }}",
+            performanceLevel: "{{ performanceLevel }}",
+            itemName: {{ itemName }},
+            variationShowType: "{{ config("Ceres.item.variation_show_type") }}"
+        },
+        isCategoryView: {% if services.template.isCategory() == "1" %}true{% else %}false{% endif %},
+        isCheckoutView : {% if services.template.isCheckout() == "1" %}true{% else %}false{% endif %}
     };
 </script>

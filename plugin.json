@@ -1,6 +1,7 @@
 {
-    "version"           : "1.0.3",
+    "version"           : "1.2.6",
     "name"              : "Ceres",
+    "marketplaceName"   : {"de": "Ceres","en": "Ceres"},
     "description"       : "This is the official Ceres plugin developed by plentymarkets. Ceres is the default template plugin for plentymarkets 7 online stores.",
     "author"            : "plentymarkets GmbH",
     "license"           : "AGPL-3.0",
@@ -17,12 +18,25 @@
     "namespace"         : "Ceres",
     "serviceProvider"   : "Ceres\\Providers\\TemplateServiceProvider",
     "javaScriptFiles"   : [],
+    "dataProviders"     :
+    [
+        {
+            "key":"Ceres\\Containers\\CeresLastSeenContainer",
+            "name":"Last seen items",
+            "description":"Display a list of last seen items in your online store"
+        }
+    ],
     "containers"        :
     [
         {
             "key"           : "Template.Style",
             "name"          : "Template: Style",
             "description"   : "Add style to Ceres with a theme plugin."
+        },
+        {
+            "key"           : "Template.StyleOverwrite",
+            "name"          : "Template: Override style",
+            "description"   : "Override the default CSS file of Ceres."
         },
         {
             "key"           : "Script.Loader",
@@ -53,6 +67,61 @@
             "key"           : "StaticPages.PageNotFound",
             "name"          : "Static Pages: Page not found",
             "description"   : "Add additional content on the 404 page."
+        },
+        {
+            "key"           : "Homepage",
+            "name"          : "Override homepage",
+            "description"   : "Override the complete homepage."
+        },
+        {
+            "key"           : "Homepage.Container1",
+            "name"          : "Homepage: Container 1",
+            "description"   : "Replace the image slider of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container2",
+            "name"          : "Homepage: Container 2",
+            "description"   : "Replace the upper item preview of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container3",
+            "name"          : "Homepage: Container 3",
+            "description"   : "Replace the lower item preview of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container4",
+            "name"          : "Homepage: Container 4",
+            "description"   : "Replace the first category preview of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container5",
+            "name"          : "Homepage: Container 5",
+            "description"   : "Replace the second category preview of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container6",
+            "name"          : "Homepage: Container 6",
+            "description"   : "Replace the first list of items of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container7",
+            "name"          : "Homepage: Container 7",
+            "description"   : "Replace the third category preview of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container8",
+            "name"          : "Homepage: Container 8",
+            "description"   : "Replace the fourth category preview of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container9",
+            "name"          : "Homepage: Container 9",
+            "description"   : "Replace the second list of items of the homepage."
+        },
+        {
+            "key"           : "Homepage.Container10",
+            "name"          : "Homepage: Container 10",
+            "description"   : "Add additional content on the homepage."
         },
         {
             "key"           : "Homepage.PaymentMethods",
@@ -113,6 +182,21 @@
             "key"           : "SingleItem.AdditionalContentAfterAddToBasket",
             "name"          : "Single item: Additional content after \"Add to shopping cart\" button",
             "description"   : "Add additional content after the 'Add to shopping cart' button in the single item view."
+        },
+        {
+            "key"           : "SingleItem.AddDetailTabs",
+            "name"          : "Single item: Add detail tabs",
+            "description"   : "Add additional tabs to the tab menu in the single item view."
+        },
+        {
+            "key"           : "SingleItem.AddDetailTabsContent",
+            "name"          : "Single item: Add content to detail tabs",
+            "description"   : "Add content to the detail tabs in the single item view."
+        },
+        {
+            "key"           : "SingleItem.ItemListContainer",
+            "name"          : "Single item: Container for item lists",
+            "description"   : "Add item lists in the single item view."
         },
         {
             "key"           : "BasketTotals.BeforeItemSum",
@@ -284,6 +368,17 @@
             "description"   : "Add content after the 'Order now' button in the checkout."
         },
         {
+            "key"           : "Checkout.CustomAddressField",
+            "name"          : "Checkout: Address field container",
+            "description"   : "Add content, e.g. one or multiple custom address fields, at the bottom of the address form."
+        },
+        {
+            "key"           : "OrderConfirmation.Override",
+            "name"          : "Order confirmation: Override order confirmation",
+            "description"   : "Override the complete order confirmation page.",
+            "multiple"      : false
+        },
+        {
             "key"           : "OrderConfirmation.AdditionalPaymentInformation",
             "name"          : "Order confirmation: Additional payment information",
             "description"   : "Add additional payment information on the order confirmation page."
@@ -300,6 +395,11 @@
             "description"   : "Add content after totals on the order confirmation page."
         },
         {
+            "key"           : "MyAccount.OrderHistoryPaymentInformation",
+            "name"          : "My account: Additional payment information",
+            "description"   : "Add additional payment information after the order information on the My account page."
+        },
+        {
             "key"           : "CategoryItem.BeforePrices",
             "name"          : "Category item list: Before prices container",
             "description"   : "Add content before the prices in the category item view."
@@ -309,6 +409,5 @@
             "name"          : "Category item list: After prices container",
             "description"   : "Add content after the prices in the category item view."
         }
-    ],
-    "dataProviders"     : []
+    ]
 }

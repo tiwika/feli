@@ -3,10 +3,12 @@ Vue.component("address-input-group", {
     props: [
         "addressData",
         "defaultCountry",
+        "addressType",
+        "modalType",
         "template"
     ],
 
-    data: function()
+    data()
     {
         return {
             stateList  : [],
@@ -18,7 +20,7 @@ Vue.component("address-input-group", {
     /**
      * Check whether the address data exists. Else, create an empty one
      */
-    created: function()
+    created()
     {
         this.$options.template = this.template;
 
@@ -34,17 +36,68 @@ Vue.component("address-input-group", {
     {
         /**
          * Update the address input group to show.
-         * @param value
+         * @param shippingCountry
          */
-        onSelectedCountryChanged: function(value)
+        onSelectedCountryChanged(shippingCountry)
         {
-            if (this.countryLocaleList.indexOf(value) > 0)
+            if (this.countryLocaleList.indexOf(shippingCountry.isoCode2) >= 0)
             {
-                this.localeToShow = value;
+                this.localeToShow = shippingCountry.isoCode2;
             }
             else
             {
                 this.localeToShow = this.defaultCountry;
+            }
+        },
+
+        getOptionType(data, optionType)
+        {
+            for (var i = 0; i < data.length; i++)
+            {
+                if (optionType === data[i].typeId)
+                {
+                    return data[i].value;
+                }
+            }
+            return "";
+        },
+
+        equalOptionValues(newValue, data, optionType)
+        {
+            var oldValue = this.getOptionType(data, optionType);
+
+            if (typeof newValue === "undefined")
+            {
+                return oldValue;
+            }
+
+            return oldValue === newValue;
+        }
+    },
+
+    filters: {
+        optionType:{
+
+            read(value, optionType)
+            {
+                var data = this.addressData.options;
+
+                if (typeof data === "undefined")
+                {
+                    return value;
+                }
+                else if (this.modalType === "update" && !this.equalOptionValues(value, data, optionType))
+                {
+                    return value;
+                }
+
+                return this.getOptionType(data, optionType);
+
+            },
+
+            write(value)
+            {
+                return value;
             }
         }
     }

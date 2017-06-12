@@ -1,5 +1,6 @@
-var AddressService    = require("services/AddressService");
-var ValidationService = require("services/ValidationService");
+var AddressService = require("services/AddressService");
+
+import ValidationService from "services/ValidationService";
 
 Vue.component("create-update-address", {
 
@@ -32,15 +33,32 @@ Vue.component("create-update-address", {
         {
             var self = this;
 
-            ValidationService.validate($("#my-form"))
-                .done(function()
-                {
-                    self.saveAddress();
-                })
-                .fail(function(invalidFields)
-                {
-                    ValidationService.markInvalidFields(invalidFields, "error");
-                });
+            if (this.addressType === "1")
+            {
+                ValidationService.validate($("#billing_address_form"))
+                    .done(function()
+                    {
+                        self.saveAddress();
+                    })
+                    .fail(function(invalidFields)
+                    {
+                        ValidationService.markInvalidFields(invalidFields, "error");
+                    });
+
+            }
+            else if (this.addressType === "2")
+            {
+                ValidationService.validate($("#delivery_address_form"))
+                    .done(function()
+                    {
+                        self.saveAddress();
+                    })
+                    .fail(function(invalidFields)
+                    {
+                        ValidationService.markInvalidFields(invalidFields, "error");
+                    });
+            }
+
         },
 
         /**
@@ -48,7 +66,7 @@ Vue.component("create-update-address", {
          */
         saveAddress: function()
         {
-            if (this.modalType === "create")
+            if (this.modalType === "initial" || this.modalType === "create")
             {
                 this.createAddress();
             }
@@ -87,6 +105,10 @@ Vue.component("create-update-address", {
                     }
 
                     this.waiting = false;
+                }.bind(this))
+                .fail(function()
+                {
+                    this.waiting = false;
                 }.bind(this));
         },
 
@@ -108,6 +130,10 @@ Vue.component("create-update-address", {
 
                     this.$dispatch("new-address-created", this.addressData);
 
+                    this.waiting = false;
+                }.bind(this))
+                .fail(function()
+                {
                     this.waiting = false;
                 }.bind(this));
         }

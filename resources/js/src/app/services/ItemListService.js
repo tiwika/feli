@@ -1,19 +1,21 @@
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
 var ResourceService = require("services/ResourceService");
-var UrlService = require("services/UrlService");
+
+import UrlService from "services/UrlService";
 
 module.exports = (function($)
 {
     var searchParams =
         {
-            query       : "",
-            items       : App.config.defaultItemsPerPage,
-            sorting     : App.config.defaultSorting,
-            page        : 1,
-            facets      : "",
-            categoryId  : null,
-            template    : ""
+            query               : "",
+            items               : App.config.defaultItemsPerPage,
+            sorting             : App.config.defaultSorting,
+            page                : 1,
+            facets              : "",
+            categoryId          : null,
+            template            : "",
+            variationShowType   : App.config.variationShowType
         };
 
     return {
@@ -107,7 +109,7 @@ module.exports = (function($)
     {
         searchParams.items = items;
 
-        items = (items !== App.config.defaultItemsPerPage) ? items : null;
+        items = (items != App.config.defaultItemsPerPage) ? items : null;
         UrlService.setUrlParam("items", items);
     }
 

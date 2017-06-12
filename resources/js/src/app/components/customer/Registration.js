@@ -2,7 +2,7 @@ var ApiService          = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
 var ModalService        = require("services/ModalService");
 
-var ValidationService = require("services/ValidationService");
+import ValidationService from "services/ValidationService";
 
 Vue.component("registration", {
 
@@ -64,12 +64,19 @@ Vue.component("registration", {
                 {
                     ApiService.setToken(response);
 
-                    if (document.getElementById(component.modalElement) !== null)
+                    if (typeof response === "object")
                     {
-                        ModalService.findModal(document.getElementById(component.modalElement)).hide();
-                    }
+                        NotificationService.success(Translations.Template.accRegistrationSuccessful).closeAfter(3000);
 
-                    NotificationService.success(Translations.Template.accRegistrationSuccessful).closeAfter(3000);
+                        if (document.getElementById(component.modalElement) !== null)
+                        {
+                            ModalService.findModal(document.getElementById(component.modalElement)).hide();
+                        }
+                    }
+                    else
+                    {
+                        NotificationService.error(Translations.Template.accRegistrationError).closeAfter(3000);
+                    }
 
                     if (component.backlink !== null && component.backlink)
                     {

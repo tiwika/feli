@@ -4,7 +4,7 @@
 	flex-flow: row wrap;
 	border-bottom:1px solid $gray-lighter;
 
-	.toggle-description, //TODO remove this class. deprecated
+	.toggle-description,
 	.item-toggle{
 	    display: none;
 	}
@@ -123,7 +123,7 @@
 		}
 
 		&:after{
-			content: 'Mehr';
+			content: attr(data-show-more);
 			font-weight: 700;
 			color: $gray-light;
 		    display: inline-block;
@@ -136,12 +136,12 @@
 
 	.toggle-description:checked{
 		& ~ .item-description{
-			max-height: 25em;// 10 lines
+			max-height: 70em;// 10 lines
 		}
 
 		& ~ .expand-btn{
 			&:after{
-				content: 'Weniger';
+				content: attr(data-show-less);
 			}
 		}
 	}
@@ -161,9 +161,14 @@
 	    color: $gray-lighter;
 	    cursor: pointer;
 		transition: color 250ms;
-			&:hover {
-	    	color: $brand-danger;
-			}
+		&:hover {
+    		color: $brand-danger;
+    		text-decoration: none;
+		}
+		&.btn-danger:hover {
+			color:white;
+		}
+		&:focus {outline:none;}
 	}
 
 	@include media-breakpoint-up(sm){
@@ -214,11 +219,6 @@
 
 		.item-remove{
 		    bottom: 1em;
-		    color: $gray-lighter;
-
-		    &:hover{
-		    	color: $brand-danger;
-		    }
 		}
 
 	}
@@ -238,4 +238,10 @@
 			}
 		}
 	}
+}
+
+.img-basket-small {
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
 }
