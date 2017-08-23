@@ -1,5 +1,9 @@
 {% set currentLang = services.sessionStorage.getLang() %}
-{% set homepageData = getExternalContent("https://cdn02.plentymarkets.com/pmsbpnokwu6a/plugin/production/marketingresource/js/HomepageContent.json") %}
+{% set homepageJson = getExternalContent("https://cdn02.plentymarkets.com/pmsbpnokwu6a/plugin/production/marketingresource/js/HomepageContent.json") %}
+{% set homepageData = homepageJson[currentLang] %}
+
+{{random(3) }}
+{{ homepageData.recommended[random(homepageData.recommended | length - 1)] | json_encode }}
 
 
 <div style="visibility: hidden" id="currentLang">{{ currentLang }}</div>
