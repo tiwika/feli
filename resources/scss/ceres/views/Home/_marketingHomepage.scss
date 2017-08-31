@@ -1,14 +1,27 @@
+#marketing-homepage-slider {
+    margin-top: -15px;
+    
+    @include media-breakpoint-up(sm){
+        margin-top: -20px;
+    }
+
+    @include media-breakpoint-up(lg){
+        margin-top: -30px;
+    }
+}
+
 .suggest-title {
     display: flex;
-    background-color: $gray-lightest;
+    background-color: $white;
+    margin-bottom: 30px;
 
     & > h2 {
         display: inline-block;
         font-size: 20px;
         text-align: center;
         letter-spacing: 1.5px;
-        margin: 3em auto 4em;
-        padding: 0 0 1em;
+        margin: 2em auto 3em;
+        padding: 0 0 .5em;
         color: #454545;
         border-bottom: 2px solid #454545;
     }
@@ -83,7 +96,7 @@
 
     &:hover {
         &:after {
-            opacity: 0.6;
+            opacity: .5;
         }
 
         & .tile-title {
