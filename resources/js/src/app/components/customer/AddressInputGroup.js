@@ -4,14 +4,20 @@ Vue.component("address-input-group", {
 
     props:
     {
-        addressData: Object,
         defaultCountry: {
             type: String,
             default: "DE"
         },
         addressType: String,
         modalType: String,
-        template: String
+        template: String,
+        value: {
+            type: Object,
+            default()
+            {
+                return {};
+            }
+        }
     },
 
     data()
@@ -19,7 +25,7 @@ Vue.component("address-input-group", {
         return {
             stateList  : [],
             countryLocaleList: ["DE", "GB"],
-            localeToShow: ""
+            localeToShow: this.defaultCountry
         };
     },
 
@@ -29,11 +35,6 @@ Vue.component("address-input-group", {
     created()
     {
         this.$options.template = this.template;
-
-        if (!this.addressData)
-        {
-            this.addressData = {};
-        }
     },
 
     methods:
@@ -52,57 +53,17 @@ Vue.component("address-input-group", {
             {
                 this.localeToShow = this.defaultCountry;
             }
+
+            this.emitInputEvent("countryId", shippingCountry.id);
         },
 
-        getOptionType(data, optionType)
+        /**
+         * @param {string} field
+         * @param {number} value
+         */
+        emitInputEvent(field, value)
         {
-            for (var i = 0; i < data.length; i++)
-            {
-                if (optionType === data[i].typeId)
-                {
-                    return data[i].value;
-                }
-            }
-            return "";
-        },
-
-        equalOptionValues(newValue, data, optionType)
-        {
-            var oldValue = this.getOptionType(data, optionType);
-
-            if (typeof newValue === "undefined")
-            {
-                return oldValue;
-            }
-
-            return oldValue === newValue;
-        }
-    },
-
-    filters: {
-        optionType:{
-
-            read(value, optionType)
-            {
-                var data = this.addressData.options;
-
-                if (typeof data === "undefined")
-                {
-                    return value;
-                }
-                else if (this.modalType === "update" && !this.equalOptionValues(value, data, optionType))
-                {
-                    return value;
-                }
-
-                return this.getOptionType(data, optionType);
-
-            },
-
-            write(value)
-            {
-                return value;
-            }
+            this.$emit("input", {field, value});
         }
     }
 });

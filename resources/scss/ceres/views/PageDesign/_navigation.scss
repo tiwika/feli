@@ -292,7 +292,6 @@ nav.navbar.megamenu {
 						column-gap 		: .5em;
 						column-rule 	: 1px solid #dcdbd7;
 						display 		: none;
-						max-height 		: 340px;
 						overflow 		: hidden;
 						padding 		: 1em;
 
@@ -407,6 +406,11 @@ nav.navbar.megamenu {
 
 		&.menu-active {
 			display: block !important;
+		}
+
+		.btn-up {
+			flex: none !important;
+			transform: rotateY(180deg);
 		}
 
 		li 	{

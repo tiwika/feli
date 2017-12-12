@@ -170,6 +170,8 @@
 
         {{ LayoutContainer.show("Ceres::Script.AfterScriptsLoaded") }}
 
+        {{ get_filtered_tags() }}
+
         <script>
 
             var rootElement = document.getElementById("vue-app");
@@ -196,6 +198,5 @@
             }
 
         </script>
-
     </body>
 </html>
