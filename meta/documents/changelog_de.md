@@ -1,43 +1,71 @@
 # Release Notes für Ceres
 
-## v2.0.4 (unknown)
-
-### Behoben
-
-- Bilder in den **Item-Listen** werden nun korrekt geladen, sobald sie sichtbar werden.
+## v2.1.3 (unknown)
 
 ### Geändert
 
-- Die **Item-Listen** zeigen nun dynamisch viele Artikel, abhängig von der aktuellen Auflösung.
+- Die Elemente in der **Kasse** bestehen nun aus 2 optisch voneinander getrennten Spalten, um die rechtlichen Anforderungen abzudecken.
+- Das Eingabefeld für Kundenwünsche in der **Kasse** befindet sich nun unterhalb der Auswahl für die Zahlungsarten.
+- Die Checkbox für die rechtlichen Angaben, sowie der "Kaufen"-Button in der **Kasse** befinden sich nun unterhalb der Warenkorb Summe.
 
-## v2.0.3 (unknown)
+## v2.1.2 (unknown) <a href="https://github.com/plentymarkets/plugin-ceres/compare/2.1.1...2.1.2" target="_blank"><b>Übersicht aller Änderungen</b></a>
+
+### Behoben
+
+- Die Versandkosten in der Versandkosten auswahl updaten sich nun.
+- Das vorraussichtliche Lieferdatum in der **Bestellübersicht** wird nun nicht mehr ausgegeben, wenn das Datum nicht in den Daten vorhanden ist.
+
+## v2.1.1 (2018-01-09) <a href="https://github.com/plentymarkets/plugin-ceres/compare/2.1.0...2.1.1" target="_blank"><b>Übersicht aller Änderungen</b></a>
+
+### Behoben
+
+- Es wurde ein Fehler behoben, bei dem Artikel-URLs ohne definierten URL-Pfad nicht korrekt generiert werden konnten.
+
+## v2.1.0 (2018-01-04) <a href="https://github.com/plentymarkets/plugin-ceres/compare/2.0.3...2.1.0" target="_blank"><b>Übersicht aller Änderungen</b></a>
 
 ### Hinzugefügt
 
-- **SEO:** Auf der **Startseite** wird nun der Shop Name als h1-Überschrift ausgegeben.
-
-### Behoben
-
-- Die Artikel im Slider auf der **Startseite** werden nun korrekt ausgegeben.
-- Ein Fehler wurde behoben der das Rendern der Filter verhindert hat.
+- **SEO:** Auf der Startseite wird nun der Webshop-Name als H1-Überschrift ausgegeben.
 
 ### Geändert
 
+- In den Dropdown-Menüs der Adresskomponenten werden keine Adressen mehr angezeigt, die nicht ausgewählt werden können.
+- Das Overlay zum Löschen von Adressen wurde angepasst, um moderner zu wirken.
+- Für Artikelbilder, die im Warenkorb, auf der Kategorieseite und in der Artikelansicht angezeigt werden, werden die im Backend eingestellten alternativen Texte der Bilder gesetzt.
+- Artikellisten zeigen nun je nach aktueller Auflösung dynamisch unterschiedlich viele Artikel an.
 - **SEO:** Die Überschriften diverser Seiten wurden in eine korrekte Hierarchie gebracht.
-- Im **Checkout** gibt es nun die Möglichkeit, dass ein Bezahlplugin sich selber deaktivieren kann.
-- Bei den Artikelbildern im Basket, der Kategorieseite und in der Artikeldetailansicht werden nun die im Backend eingestellten alternative Texte der Bilder gesetzt.
-- Wenn man sich mit einer Email registriert die bereits existiert, bleibt das Overlay nun geöffnet und man sieht die Fehlermeldung besser.
+- Die Schriftgröße der Zahlen in den Filtern wurde erhöht um besser lesbar zu sein.
+
+### Behoben
+
+- Im Checkout werden die Adresseingaben wieder korrekt validiert.
+- Bilder in den Artikellisten werden nun korrekt geladen, sobald sie sichtbar werden.
+- Die Artikel im Slider auf der Startseite werden nun korrekt ausgegeben.
+- Ein Fehler führte dazu, dass Filter nicht gerendert wurden. Dies wurde behoben.
+- Ein Fehler führte dazu, dass die Artikelansicht für Artikel ohne Artikelvorlagen nicht angezeigt werden konnte. Dies wurde behoben.
+
+### TODO
+
+- Durch Anpassungen an der Suchlogik müssen Facettenverknüpfungen für den Mandanten gesetzt werden. Öffnen Sie im zentralen Login das Menü **System » Mandant » Mandant wählen » Dienste » Facettenverknüpfungen**. Wählen Sie eine Facette und klicken Sie auf **Facette verknüpfen**.
+
+## v2.0.3 (2017-12-21) <a href="https://github.com/plentymarkets/plugin-ceres/compare/2.0.2...2.0.3" target="_blank"><b>Übersicht aller Änderungen</b></a>
+
+### Geändert
+
+- Im **Checkout** gibt es nun die Möglichkeit, dass ein Bezahl-Plugin sich selbst deaktivieren kann.
+- Wenn man sich mit einer E-Mail registriert, die bereits existiert, bleibt das Overlay nun geöffnet und man sieht die Fehlermeldung besser.
+- Artikel und Varianten können nun dynamisch angezeigt werden. Weitere Informationen unter <a href="https://knowledge.plentymarkets.com/omni-channel/online-shop/ceres-einrichten#90" target="_blank">Artikelansicht anpassen</a>.
 
 ### Behoben
 
 - In der **Wunschliste** werden Bilder von Varianten nun korrekt ausgegeben.
-- Der Button um einen Artikel aus der **Wunschliste** zu entfernen wird nun mittig angezeigt.
-- Auf iOS geräten sollte nun der Cursor in Modalen nicht mehr verrutschen. iOS [Bug-Report](https://bugs.webkit.org/show_bug.cgi?id=176896).
-- Es wurde ein Fehler behoben, wobei sich die **Warenkorbvorschau** manchmal nicht geöffnet hat, bei Klick auf den entsprechenden Button.
-- Es wurde ein Fehler behoben, wobei sich die **Warenkorbvorschau** nicht geöffnet hat, nachdem ein Artikel in den Warenkorb gelegt wurde. (Insofern konfiguriert)
-- Auf der Artikelansicht werden die Versandkosten nun wieder korrekt verlinkt (wenn konfiguriert)
-- Es wurde ein Fehler behoben, der dazu führte das manche Seite nicht die maximale höhe genommen haben (weißer rand unten).
-- Die styles in Firefox sollten nun wieder korrekt aussehen.
+- Der Button, um einen Artikel aus der **Wunschliste** zu entfernen, wird nun mittig angezeigt.
+- Auf iOS-Geräten sollte nun der Cursor in Modalen nicht mehr verrutschen. iOS [Bug-Report](https://bugs.webkit.org/show_bug.cgi?id=176896).
+- Es wurde ein Fehler behoben, wobei sich die **Warenkorbvorschau** manchmal nicht geöffnet hat bei Klick auf den entsprechenden Button.
+- Es wurde ein Fehler behoben, wobei sich die **Warenkorbvorschau** nicht geöffnet hat, nachdem ein Artikel in den Warenkorb gelegt wurde (insofern konfiguriert).
+- In der Artikelansicht werden die Versandkosten nun wieder korrekt verlinkt (wenn konfiguriert).
+- Es wurde ein Fehler behoben, der dazu führte, dass manche Seite nicht die maximale Höhe genommen haben (weißer Rand unten).
+- Die Styles in Firefox werden nun wieder korrekt dargestellt.
 
 ## v2.0.2 (2017-12-13) <a href="https://github.com/plentymarkets/plugin-ceres/compare/2.0.1...2.0.2" target="_blank"><b>Übersicht aller Änderungen</b></a>
 
