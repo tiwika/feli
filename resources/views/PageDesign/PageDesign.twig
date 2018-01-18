@@ -26,9 +26,9 @@
     {{ services.crossSelling.setType(config("Ceres.item.lists.cross_selling_type")) }}
 {% endif %}
 
-{{ services.performance.start('PageDesign.getNavigationTree.Start') }}
+{{ services.performance.start('PageDesign.getNavigationTree') }}
 {% set categories = services.category.getNavigationTree("item", lang, 6) %}
-{{ services.performance.track('PageDesign.getNavigationTree.End') }}
+{{ services.performance.track('PageDesign.getNavigationTree') }}
 
 <html lang="{{ lang }}" data-framework="vue" prefix="og: http://ogp.me/ns#">
 
