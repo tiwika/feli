@@ -57,22 +57,28 @@
             </div>
 
             <div class="wrapper wrapper-main {% if fixNavBarPos == 'true' %}isSticky{% endif %}">
+                {{ services.performance.trackRuntime('PageDesign.PartialHeader.Start') }}
                 {% include getPartial('header') %}
+                {{ services.performance.trackRuntime('PageDesign.PartialHeader.End') }}
 
+                {{ services.performance.trackRuntime('PageDesign.PageBody.Start') }}
                 <div id="page-body" class="main">
                     {% block PageBody %}
                         <!-- inject content of inherited templates here -->
                     {% endblock %}
                 </div>
+                {{ services.performance.trackRuntime('PageDesign.PageBody.End') }}
 
+                {{ services.performance.trackRuntime('PageDesign.Footer.Start') }}
                 {% include getPartial('footer') %}
 
                 {% block PartialFooter %}
                 {% endblock %}
+                {{ services.performance.trackRuntime('PageDesign.Footer.End') }}
             </div>
 
             <div class="wrapper wrapper-right">
-                {{ performance.trackRuntime('PageDesign.BasketPreview.Start') }}
+                {{ services.performance.trackRuntime('PageDesign.BasketPreview.Start') }}
                 <basket-preview
                     template="#vue-basket-preview"
                     :basket-data="{{ services.basket.getBasketForTemplate() | json_encode() }}"
