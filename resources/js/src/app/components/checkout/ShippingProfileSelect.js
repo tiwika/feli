@@ -36,7 +36,7 @@ Vue.component("shipping-profile-select", {
                 },
                 error =>
                 {
-                    console.log("error");
+                    console.error(error);
                 });
 
             this.validate();
