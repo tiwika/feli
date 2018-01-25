@@ -13,7 +13,12 @@
   },
   "rules"  : {
     // PLENTY
-    "no-console"              : "warn",
+    "no-console"              : [
+      "warn",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
     "no-undef"                : "off",
     "no-constant-condition"   : "error",
     "no-control-regex"        : "warn",
