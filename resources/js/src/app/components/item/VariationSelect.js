@@ -67,7 +67,7 @@ Vue.component("variation-select", {
                 const preselectedVariation = this.variations.filter(variation =>
                 {
                     // eslint-disable-next-line eqeqeq
-                    return variation.variationId == this.preselect;
+                    return parseInt(variation.variationId) === parseInt(this.preselect);
                 });
 
                 if (!!preselectedVariation && preselectedVariation.length === 1)
@@ -158,12 +158,12 @@ Vue.component("variation-select", {
             return this.variations.filter(function(variation)
             {
 
-                for (var i = 0; i < variation.attributes.length; i++)
+                for (let i = 0; i < variation.attributes.length; i++)
                 {
-                    var id = variation.attributes[i].attributeId;
-                    var val = variation.attributes[i].attributeValueId;
+                    const id = variation.attributes[i].attributeId;
+                    const val = variation.attributes[i].attributeValueId;
 
-                    if (!!attributes[id] && attributes[id] != val)
+                    if (!!attributes[id] && parseInt(attributes[id]) !== parseInt(val))
                     {
                         return false;
                     }
@@ -182,7 +182,7 @@ Vue.component("variation-select", {
         isEnabled(attributeId, attributeValueId)
         {
             // clone selectedAttributes to avoid touching objects bound to UI
-            var attributes = JSON.parse(JSON.stringify(this.selectedAttributes));
+            const attributes = JSON.parse(JSON.stringify(this.selectedAttributes));
 
             attributes[attributeId] = attributeValueId;
             return this.filterVariations(attributes).length > 0;
@@ -195,12 +195,12 @@ Vue.component("variation-select", {
          */
         setAttributes(variation)
         {
-            var hasChanges = false;
+            let hasChanges = false;
 
-            for (var i = 0; i < variation.attributes.length; i++)
+            for (let i = 0; i < variation.attributes.length; i++)
             {
-                var id = variation.attributes[i].attributeId;
-                var val = variation.attributes[i].attributeValueId;
+                const id = variation.attributes[i].attributeId;
+                const val = variation.attributes[i].attributeValueId;
 
                 if (this.selectedAttributes[id] !== val)
                 {
