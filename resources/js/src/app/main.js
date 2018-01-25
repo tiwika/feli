@@ -1,186 +1,191 @@
 // Frontend end scripts
 // eslint-disable-next-line
-var init = (function($, window, document)
+(function($, window, document)
 {
-
-    function CeresMain()
+    $(window).scroll(function()
     {
+        const $wrapperMain = $(".wrapper-main");
+
+        if ($wrapperMain.hasClass("isSticky"))
+        {
+            if ($(this).scrollTop() > 1)
+            {
+                $wrapperMain.addClass("sticky");
+            }
+            else
+            {
+                $wrapperMain.removeClass("sticky");
+            }
+        }
+    });
+
+    // init bootstrap tooltips
+    $("[data-toggle=\"tooltip\"]").tooltip();
+
+    // Replace all SVG images with inline SVG, class: svg
+    $("img[src$=\".svg\"]").each(function()
+    {
+        const $img = jQuery(this);
+        const imgURL = $img.attr("src");
+        const attributes = $img.prop("attributes");
+
+        $.get(imgURL, function(data)
+        {
+            // Get the SVG tag, ignore the rest
+            const $svg = jQuery(data).find("svg");
+
+            // Remove any invalid XML tags
+            $svg.removeAttr("xmlns:a");
+
+            // Loop through IMG attributes and apply on SVG
+            $.each(attributes, function()
+            {
+                $svg.attr(this.name, this.value);
+            });
+
+            // Replace IMG with SVG
+            $img.replaceWith($svg);
+        }, "xml");
+    });
+
+    const $toggleListView = $(".toggle-list-view");
+    const $mainNavbarCollapse = $("#mainNavbarCollapse");
+
+    $(document).on("click", function(evt)
+    {
+        const $vueApp = $("#vue-app");
+
+        if ($vueApp.hasClass("open-right") &&
+            !evt.target.classList.contains("basket-preview") &&
+            !evt.target.classList.contains("message") &&
+            $(evt.target).parents(".basket-preview").length <= 0)
+        {
+            evt.preventDefault();
+            $vueApp.toggleClass("open-right");
+        }
+
+        const $countrySettings = $("#countrySettings");
+
+        if (evt.target.id !== "countrySettings" &&
+            $(evt.target).parents("#countrySettings").length <= 0 &&
+            $countrySettings.attr("aria-expanded") === "true")
+        {
+            $countrySettings.collapse("hide");
+        }
+
+        const $searchBox = $("#searchBox");
+
+        if (evt.target.id !== "searchBox" &&
+            $(evt.target).parents("#searchBox").length <= 0 &&
+            $searchBox.attr("aria-expanded") === "true")
+        {
+            $searchBox.collapse("hide");
+        }
+
+        const $currencySelect = $("#currencySelect");
+
+        if (evt.target.id !== "currencySelect" &&
+            $(evt.target).parents("#currencySelect").length <= 0 &&
+            $currencySelect.attr("aria-expanded") === "true")
+        {
+            $currencySelect.collapse("hide");
+        }
+    });
+
+    $toggleListView.on("click", function(evt)
+    {
+        evt.preventDefault();
+
+        // toggle it's own state
+        $toggleListView.toggleClass("grid");
+
+        // toggle internal style of thumbs
+        $(".product-list, .cmp-product-thumb").toggleClass("grid");
+    });
+
+    $mainNavbarCollapse.collapse("hide");
+
+    // Add click listener outside the navigation to close it
+    $mainNavbarCollapse.on("show.bs.collapse", function()
+    {
+        $(".main").one("click", closeNav);
+    });
+
+    $mainNavbarCollapse.on("hide.bs.collapse", function()
+    {
+        $(".main").off("click", closeNav);
+    });
+
+    function closeNav()
+    {
+        $("#mainNavbarCollapse").collapse("hide");
+    }
+
+    $(document).ready(function()
+    {
+        const offset = 250;
+        const duration = 300;
+
+        let isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+        const $backToTop = $(".back-to-top");
+        const $backToTopCenter = $(".back-to-top-center");
+
         $(window).scroll(function()
         {
-            if ($(".wrapper-main").hasClass("isSticky"))
+            if (isDesktop)
             {
-                if ($(this).scrollTop() > 1)
+                if ($(this).scrollTop() > offset)
                 {
-                    $(".wrapper-main").addClass("sticky");
+                    $backToTop.fadeIn(duration);
+                    $backToTopCenter.fadeIn(duration);
                 }
                 else
                 {
-                    $(".wrapper-main").removeClass("sticky");
+                    $backToTop.fadeOut(duration);
+                    $backToTopCenter.fadeOut(duration);
                 }
             }
         });
 
-        // init bootstrap tooltips
-        $("[data-toggle=\"tooltip\"]").tooltip();
-
-        // Replace all SVG images with inline SVG, class: svg
-        $("img[src$=\".svg\"]").each(function()
+        window.addEventListener("resize", function()
         {
-            var $img = jQuery(this);
-            var imgURL = $img.attr("src");
-            var attributes = $img.prop("attributes");
-
-            $.get(imgURL, function(data)
-            {
-                // Get the SVG tag, ignore the rest
-                var $svg = jQuery(data).find("svg");
-
-                // Remove any invalid XML tags
-                $svg = $svg.removeAttr("xmlns:a");
-
-                // Loop through IMG attributes and apply on SVG
-                $.each(attributes, function()
-                {
-                    $svg.attr(this.name, this.value);
-                });
-
-                // Replace IMG with SVG
-                $img.replaceWith($svg);
-            }, "xml");
+            isDesktop = window.matchMedia("(min-width: 768px)").matches;
         });
 
-        var $toggleListView = $(".toggle-list-view");
-        var $mainNavbarCollapse = $("#mainNavbarCollapse");
-
-        $(document).on("click", function(evt)
+        $backToTop.click(function(event)
         {
-            if ($("#vue-app").hasClass("open-right"))
-            {
-                if ((evt.target != $(".basket-preview")) &&
-                    (evt.target.classList[0] != "message") &&
-                    ($(evt.target).parents(".basket-preview").length <= 0))
-                {
-                    evt.preventDefault();
-                    $("#vue-app").toggleClass("open-right");
-                }
-            }
+            event.preventDefault();
 
-            if ((evt.target.id != "countrySettings") &&
-                ($(evt.target).parents("#countrySettings").length <= 0) &&
-                ($("#countrySettings").attr("aria-expanded") == "true"))
-            {
-                $("#countrySettings").collapse("hide");
-            }
+            $("html, body").animate({scrollTop: 0}, duration);
 
-            if ((evt.target.id != "searchBox") &&
-                ($(evt.target).parents("#searchBox").length <= 0) &&
-                ($("#searchBox").attr("aria-expanded") == "true"))
-            {
-                $("#searchBox").collapse("hide");
-            }
-
-            if ((evt.target.id != "currencySelect") &&
-                ($(evt.target).parents("#currencySelect").length <= 0) &&
-                ($("#currencySelect").attr("aria-expanded") == "true"))
-            {
-                $("#currencySelect").collapse("hide");
-            }
+            return false;
         });
 
-        $toggleListView.on("click", function(evt)
+        $backToTopCenter.click(function(event)
         {
-            evt.preventDefault();
+            event.preventDefault();
 
-            // toggle it's own state
-            $toggleListView.toggleClass("grid");
+            $("html, body").animate({scrollTop: 0}, duration);
 
-            // toggle internal style of thumbs
-            $(".product-list, .cmp-product-thumb").toggleClass("grid");
+            return false;
         });
 
-        $mainNavbarCollapse.collapse("hide");
-
-        // Add click listener outside the navigation to close it
-        $mainNavbarCollapse.on("show.bs.collapse", function()
+        $("#searchBox").on("show.bs.collapse", function()
         {
-            $(".main").one("click", closeNav);
+            $("#countrySettings").collapse("hide");
         });
 
-        $mainNavbarCollapse.on("hide.bs.collapse", function()
+        $("#countrySettings").on("show.bs.collapse", function()
         {
-            $(".main").off("click", closeNav);
+            $("#searchBox").collapse("hide");
         });
 
-        function closeNav()
+        $("#accountMenuList").click(function()
         {
-            $("#mainNavbarCollapse").collapse("hide");
-        }
-
-        $(document).ready(function()
-        {
-            var offset = 250;
-            var duration = 300;
-
-            var isDesktop = window.matchMedia("(min-width: 768px)").matches;
-
-            $(window).scroll(function()
-            {
-                if (isDesktop)
-                {
-                    if ($(this).scrollTop() > offset)
-                    {
-                        $(".back-to-top").fadeIn(duration);
-                        $(".back-to-top-center").fadeIn(duration);
-                    }
-                    else
-                    {
-                        $(".back-to-top").fadeOut(duration);
-                        $(".back-to-top-center").fadeOut(duration);
-                    }
-                }
-            });
-
-            window.addEventListener("resize", function()
-            {
-                isDesktop = window.matchMedia("(min-width: 768px)").matches;
-            });
-
-            $(".back-to-top").click(function(event)
-            {
-                event.preventDefault();
-
-                $("html, body").animate({scrollTop: 0}, duration);
-
-                return false;
-            });
-
-            $(".back-to-top-center").click(function(event)
-            {
-                event.preventDefault();
-
-                $("html, body").animate({scrollTop: 0}, duration);
-
-                return false;
-            });
-
-            $("#searchBox").on("show.bs.collapse", function()
-            {
-                $("#countrySettings").collapse("hide");
-            });
-
-            $("#countrySettings").on("show.bs.collapse", function()
-            {
-                $("#searchBox").collapse("hide");
-            });
-
-            $("#accountMenuList").click(function()
-            {
-                $("#countrySettings").collapse("hide");
-                $("#searchBox").collapse("hide");
-            });
+            $("#countrySettings").collapse("hide");
+            $("#searchBox").collapse("hide");
         });
-    }
-
-    window.CeresMain = new CeresMain();
+    });
 
 })(jQuery, window, document);
