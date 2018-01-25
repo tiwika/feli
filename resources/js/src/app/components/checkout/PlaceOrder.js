@@ -1,5 +1,5 @@
-var ApiService = require("services/ApiService");
-var NotificationService = require("services/NotificationService");
+const ApiService = require("services/ApiService");
+const NotificationService = require("services/NotificationService");
 
 Vue.component("place-order", {
 
@@ -92,37 +92,39 @@ Vue.component("place-order", {
 
         afterPreparePayment(response)
         {
-            var paymentType = response.type || "errorCode";
-            var paymentValue = response.value || "";
+            let paymentValue = response.value || "";
 
-            switch (paymentType)
+            if (response.type)
+            {
+                paymentValue = "Unknown response from payment provider: " + response.type;
+            }
+
+            if (response.type === "continue" && this.targetContinue)
+            {
+                paymentValue = this.targetContinue;
+            }
+
+            if (paymentValue)
+            {
+                this.handlePaymentCallback(response.type, paymentValue);
+            }
+        },
+
+        handlePaymentCallback(type, value)
+        {
+            switch (type)
             {
             case "continue":
-                var target = this.targetContinue;
-
-                if (target)
-                    {
-                    window.location.assign(target);
-                }
-                break;
             case "redirectUrl":
-                    // redirect to given payment provider
-                window.location.assign(paymentValue);
+                window.location.assign(value);
                 break;
             case "externalContentUrl":
-                    // show external content in iframe
-                this.showModal(paymentValue, true);
-                break;
             case "htmlContent":
-                this.showModal(paymentValue, false);
-                break;
-
-            case "errorCode":
-                NotificationService.error(paymentValue);
-                this.waiting = false;
+                // show external content in iframe
+                this.showModal(value, type === "externalContentUrl");
                 break;
             default:
-                NotificationService.error("Unknown response from payment provider: " + paymentType);
+                NotificationService.error(value);
                 this.waiting = false;
                 break;
             }
@@ -130,8 +132,8 @@ Vue.component("place-order", {
 
         showModal(content, isExternalContent)
         {
-            var $modal = $(this.$refs.modal);
-            var $modalBody = $(this.$refs.modalContent);
+            const $modal        = $(this.$refs.modal);
+            const $modalBody    = $(this.$refs.modalContent);
 
             if (isExternalContent)
             {
