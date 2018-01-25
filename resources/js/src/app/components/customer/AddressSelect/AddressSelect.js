@@ -4,6 +4,37 @@ const AddressFieldService = require("services/AddressFieldService");
 
 import ValidationService from "services/ValidationService";
 
+const ModalType = {
+    INITIAL:    "initial",
+    CREATE:     "create",
+    UPDATE:     "update",
+    DELETE:     "delete"
+};
+
+const AddressType = {
+    INVOICE:    "1",
+    SHIPPING:   "2"
+};
+
+const ModalHeadlineMap = {
+    initial: {
+        1: Translations.Template.orderInvoiceAddressInitial,
+        2: Translations.Template.orderInvoiceAddressInitial
+    },
+    create: {
+        1: Translations.Template.orderInvoiceAddressCreate,
+        2: Translations.Template.orderShippingAddressCreate
+    },
+    update: {
+        1: Translations.Template.orderInvoiceAddressEdit,
+        2: Translations.Template.orderShippingAddressEdit
+    },
+    delete: {
+        1: Translations.Template.orderInvoiceAddressDelete,
+        2: Translations.Template.orderShippingAddressDelete
+    }
+};
+
 Vue.component("address-select", {
 
     delimiters: ["${", "}"],
@@ -54,7 +85,7 @@ Vue.component("address-select", {
 
         isAddAddressEnabled()
         {
-            if (this.addressType === "1")
+            if (this.addressType === AddressType.INVOICE)
             {
                 return this.$store.getters.isLoggedIn || this.addressList.length < 1;
             }
@@ -128,7 +159,7 @@ Vue.component("address-select", {
          */
         showInitialAddModal()
         {
-            this.modalType = "initial";
+            this.modalType = ModalType.INITIAL;
 
             if (AddressFieldService.isAddressFieldEnabled(this.addressToEdit.countryId, this.addressType, "salutation"))
             {
@@ -151,7 +182,7 @@ Vue.component("address-select", {
          */
         showAddModal()
         {
-            this.modalType = "create";
+            this.modalType = ModalType.CREATE;
 
             if (AddressFieldService.isAddressFieldEnabled(this.addressToEdit.countryId, this.addressType, "salutation"))
             {
@@ -176,7 +207,7 @@ Vue.component("address-select", {
          */
         showEditModal(address)
         {
-            this.modalType = "update";
+            this.modalType = ModalType.UPDATE;
             this.addressToEdit = this.getAddressToEdit(address);
 
             if (typeof this.addressToEdit.addressSalutation === "undefined")
@@ -213,7 +244,7 @@ Vue.component("address-select", {
          */
         showDeleteModal(address)
         {
-            this.modalType = "delete";
+            this.modalType = ModalType.DELETE;
             this.addressToDelete = address;
             this.updateHeadline();
             this.deleteModal.show();
@@ -261,41 +292,14 @@ Vue.component("address-select", {
          */
         updateHeadline()
         {
-            let headline;
-
-            if (this.modalType === "initial")
+            if (ModalHeadlineMap[this.modalType] && ModalHeadlineMap[this.modalType][this.addressType])
             {
-                headline = Translations.Template.orderInvoiceAddressInitial;
-            }
-            else if (this.addressType === "2")
-            {
-                if (this.modalType === "update")
-                {
-                    headline = Translations.Template.orderShippingAddressEdit;
-                }
-                else if (this.modalType === "create")
-                {
-                    headline = Translations.Template.orderShippingAddressCreate;
-                }
-                else
-                {
-                    headline = Translations.Template.orderShippingAddressDelete;
-                }
-            }
-            else if (this.modalType === "update")
-            {
-                headline = Translations.Template.orderInvoiceAddressEdit;
-            }
-            else if (this.modalType === "create")
-            {
-                headline = Translations.Template.orderInvoiceAddressCreate;
+                this.headline = ModalHeadlineMap[this.modalType][this.addressType];
             }
             else
             {
-                headline = Translations.Template.orderInvoiceAddressDelete;
+                this.headline = ModalHeadlineMap[ModalType.INITIAL][AddressType.INVOICE];
             }
-
-            this.headline = headline;
         },
 
         /**
