@@ -1,6 +1,6 @@
 import ExceptionMap from "exceptions/ExceptionMap";
 
-var NotificationService = require("services/NotificationService");
+const NotificationService = require("services/NotificationService");
 
 Vue.component("notifications", {
 
@@ -52,32 +52,34 @@ Vue.component("notifications", {
          */
         showInitialNotifications: function()
         {
-            for (var key in this.initialNotifications)
-            {
-                // set default type top 'log'
-                var type = this.initialNotifications[key].type || "log";
-                var message = this.initialNotifications[key].message;
-                var messageCode = this.initialNotifications[key].code;
-
-                if (messageCode > 0)
+            this.initialNotification.forEach(
+                function(notification)
                 {
-                    message = Translations.Template[ExceptionMap.get(messageCode.toString())];
-                }
+                    // set default type to 'log'
+                    const type        = notification.type || "log";
+                    const messageCode = notification.code;
+                    let message       = notification.message;
 
-                // type cannot be undefined
-                if (message)
-                {
-                    if (NotificationService[type] && typeof NotificationService[type] === "function")
+                    if (messageCode > 0)
                     {
-                        NotificationService[type](message);
+                        message = Translations.Template[ExceptionMap.get(messageCode.toString())];
                     }
-                    else
+
+                    // type cannot be undefined
+                    if (message)
                     {
-                        // unkown type
-                        NotificationService.log(message);
+                        if (NotificationService[type] && typeof NotificationService[type] === "function")
+                        {
+                            NotificationService[type](message);
+                        }
+                        else
+                        {
+                            // unkown type
+                            NotificationService.log(message);
+                        }
                     }
                 }
-            }
+            );
         }
     }
 });
