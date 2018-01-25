@@ -35,7 +35,7 @@ Vue.component("payment-provider-select", {
                 },
                 error =>
                 {
-                    console.log("error");
+                    console.error(error);
                 });
 
             this.validate();
