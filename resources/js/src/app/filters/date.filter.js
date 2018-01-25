@@ -1,10 +1,10 @@
 // for docs see https://github.com/brockpetrie/vue-moment
 
-var dateFilter = function()
+const dateFilter = function()
 {
-    var args = Array.prototype.slice.call(arguments);
-    var input = args.shift();
-    var date;
+    const args = Array.prototype.slice.call(arguments);
+    const input = args.shift();
+    let date;
 
     if (isNaN(new Date(input).getTime()))
     {
@@ -16,7 +16,7 @@ var dateFilter = function()
         // If input is array, assume we're being passed a format pattern to parse against.
         // Format pattern will accept an array of potential formats to parse against.
         // Date string should be at [0], format pattern(s) should be at [1]
-        date = moment(string = input[0], formats = input[1], true);
+        date = moment(input[0], input[1], true);
     }
     else
     {
@@ -31,108 +31,110 @@ var dateFilter = function()
         return input;
     }
 
+    const parsers = {};
+
+    parsers.add = function(args)
+    {
+        // Mutates the original moment by adding time.
+        // http://momentjs.com/docs/#/manipulating/add/
+
+        const addends = args.shift()
+            .split(",")
+            .map(Function.prototype.call, String.prototype.trim);
+
+        const obj = {};
+
+        for (let aId = 0; aId < addends.length; aId++)
+        {
+            const addend = addends[aId].split(" ");
+
+            obj[addend[1]] = addend[0];
+        }
+
+        date = date.add(obj);
+    };
+
+    parsers.subtract = function(args)
+    {
+        // Mutates the original moment by subtracting time.
+        // http://momentjs.com/docs/#/manipulating/subtract/
+
+        const subtrahends = args.shift()
+            .split(",")
+            .map(Function.prototype.call, String.prototype.trim);
+
+        const obj = {};
+
+        for (let sId = 0; sId < subtrahends.length; sId++)
+        {
+            const subtrahend = subtrahends[sId].split(" ");
+
+            obj[subtrahend[1]] = subtrahend[0];
+        }
+        date = date.subtract(obj);
+    };
+
+    parsers.from = function(args)
+    {
+        // Display a moment in relative time, either from now or from a specified date.
+        // http://momentjs.com/docs/#/displaying/fromnow/
+
+        let from = "now";
+
+        if (args[0] === "now") args.shift();
+
+        if (moment(args[0]).isValid())
+        {
+            // If valid, assume it is a date we want the output computed against.
+            from = moment(args.shift());
+        }
+
+        let removeSuffix = false;
+
+        if (args[0] === true)
+        {
+            args.shift();
+            removeSuffix = true;
+
+        }
+
+        if (from !== "now")
+        {
+            date = date.from(from, removeSuffix);
+            return;
+        }
+
+        date = date.fromNow(removeSuffix);
+    };
+
+    parsers.calendar = function(args)
+    {
+        // Formats a date with different strings depending on how close to a certain date (today by default) the date is.
+        // http://momentjs.com/docs/#/displaying/calendar-time/
+
+        let referenceTime = moment();
+
+        if (moment(args[0]).isValid())
+        {
+            // If valid, assume it is a date we want the output computed against.
+            referenceTime = moment(args.shift());
+        }
+
+        date = date.calendar(referenceTime);
+    };
+
     function parse()
     {
-        var args = Array.prototype.slice.call(arguments);
-        var method = args.shift();
+        const args = Array.prototype.slice.call(arguments);
+        const method = args.shift();
 
-        switch (method)
+        if (parsers.hasOwnProperty(method))
         {
-        case "add":
-
-            // Mutates the original moment by adding time.
-            // http://momentjs.com/docs/#/manipulating/add/
-
-            var addends = args.shift()
-                .split(",")
-                .map(Function.prototype.call, String.prototype.trim);
-
-            obj = {};
-            for (var aId = 0; aId < addends.length; aId++)
-            {
-                var addend = addends[aId].split(" ");
-
-                obj[addend[1]] = addend[0];
-            }
-            date = date.add(obj);
-            break;
-
-        case "subtract":
-
-            // Mutates the original moment by subtracting time.
-            // http://momentjs.com/docs/#/manipulating/subtract/
-
-            var subtrahends = args.shift()
-                .split(",")
-                .map(Function.prototype.call, String.prototype.trim);
-
-            obj = {};
-            for (var sId = 0; sId < subtrahends.length; sId++)
-            {
-                var subtrahend = subtrahends[sId].split(" ");
-
-                obj[subtrahend[1]] = subtrahend[0];
-            }
-            date = date.subtract(obj);
-            break;
-
-        case "from":
-
-            // Display a moment in relative time, either from now or from a specified date.
-            // http://momentjs.com/docs/#/displaying/fromnow/
-
-            var from = "now";
-
-            if (args[0] === "now") args.shift();
-
-            if (moment(args[0]).isValid())
-            {
-                // If valid, assume it is a date we want the output computed against.
-                from = moment(args.shift());
-            }
-
-            var removeSuffix = false;
-
-            if (args[0] === true)
-            {
-                args.shift();
-                removeSuffix = true;
-
-            }
-
-            if (from != "now")
-            {
-                date = date.from(from, removeSuffix);
-                break;
-            }
-
-            date = date.fromNow(removeSuffix);
-            break;
-
-        case "calendar":
-
-            // Formats a date with different strings depending on how close to a certain date (today by default) the date is.
-            // http://momentjs.com/docs/#/displaying/calendar-time/
-
-            var referenceTime = moment();
-
-            if (moment(args[0]).isValid())
-            {
-                // If valid, assume it is a date we want the output computed against.
-                referenceTime = moment(args.shift());
-            }
-
-            date = date.calendar(referenceTime);
-            break;
-
-        default:
-            // Format
-            // Formats a date by taking a string of tokens and replacing them with their corresponding values.
-            // http://momentjs.com/docs/#/displaying/format/
-
-            var format = method;
-
-            date = date.format(format);
+            parsers[method].apply(null, args);
+        }
+        else
+        {
+            date = date.format(method);
         }
 
         if (args.length) parse.apply(parse, args);
