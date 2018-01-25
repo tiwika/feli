@@ -50,7 +50,7 @@ Vue.component("contact-map", {
                     resultsMap.setCenter(results[0].geometry.location);
 
                     // eslint-disable-next-line
-                    var marker = new google.maps.Marker(
+                    const marker = new google.maps.Marker(
                         {
                             map: resultsMap,
                             position: results[0].geometry.location
@@ -58,7 +58,7 @@ Vue.component("contact-map", {
                 }
                 else
                 {
-                    console.log("Not possible to get Ltd and Lng for the given address. State: " + status);
+                    console.warn("Not possible to get Ltd and Lng for the given address. State: " + status);
                 }
             });
         },
