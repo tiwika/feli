@@ -33,34 +33,28 @@ const actions =
 
         buildNavigationTreeItem({state, commit, dispatch}, {navigationTree, parent})
         {
-            let showChildren = false;
+            let parentUrl = "";
+
+            if (parent)
+            {
+                parentUrl = parent.url;
+                parent.showChildren = navigationTree.some(category => category.details[0]);
+            }
 
             for (const category of navigationTree)
             {
                 category.parent = parent;
-
-                // hide category if there is no translation
-                if (!category.details[0])
+                category.hideCategory = !category.details[0];
+                if (category.details[0])
                 {
-                    category.hideCategory = true;
-                }
-                else
-                {
-                    const parentUrl = parent ? parent.url : "";
-
                     category.url = parentUrl + "/" + category.details[0].nameUrl;
-                    showChildren = true;
-
-                    if (category.children)
-                    {
-                        dispatch("buildNavigationTreeItem", {navigationTree: category.children, parent: category});
-                    }
                 }
-            }
 
-            if (parent)
-            {
-                parent.showChildren = showChildren;
+                if (category.children)
+                {
+                    dispatch("buildNavigationTreeItem", {navigationTree: category.children, parent: category});
+                }
+
             }
         },
 
