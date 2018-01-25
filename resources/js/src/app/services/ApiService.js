@@ -3,11 +3,11 @@ var WaitScreenService   = require("services/WaitScreenService");
 
 module.exports = (function($)
 {
-    var _eventListeners = {};
+    const _eventListeners = {};
 
     $(document).ajaxComplete((ajaxEvent, xhr, options) =>
     {
-        var response;
+        let response;
 
         try
         {
@@ -20,7 +20,7 @@ module.exports = (function($)
 
         if (response)
         {
-            for (var event in response.events)
+            for (const event in response.events)
             {
                 _triggerEvent(event, response.events[event]);
             }
@@ -53,9 +53,9 @@ module.exports = (function($)
     {
         if (_eventListeners[event])
         {
-            for (var i = 0; i < _eventListeners[event].length; i++)
+            for (let i = 0; i < _eventListeners[event].length; i++)
             {
-                var listener = _eventListeners[event][i];
+                const listener = _eventListeners[event][i];
 
                 if (typeof listener !== "function")
                 {
@@ -96,31 +96,35 @@ module.exports = (function($)
 
     function _send(url, data, config)
     {
-        var deferred = $.Deferred();
+        const deferred = $.Deferred();
 
-        config = config || {};
-        config.data = data || null;
-        config.dataType = config.dataType || "json";
-        config.contentType = config.contentType || "application/x-www-form-urlencoded; charset=UTF-8";
-        config.doInBackground = !!config.doInBackground;
-        config.supressNotifications = !!config.supressNotifications;
+        config = Object.assign(
+            {
+                data:                   null,
+                dataType:               "json",
+                contentType:            "application/x-www-form-urlencoded; charset=UTF-8",
+                doInBackground:         false,
+                supressNotifications:   false
+            },
+            config
+        );
 
         if (!config.doInBackground)
         {
             WaitScreenService.showWaitScreen();
         }
         $.ajax(url, config)
-            .done(function(response)
+            .done(response =>
             {
                 deferred.resolve(response.data || response);
             })
-            .fail(function(jqXHR)
+            .fail(jqXHR =>
             {
-                var response = jqXHR.responseText ? $.parseJSON(jqXHR.responseText) : {};
+                const response = jqXHR.responseText ? $.parseJSON(jqXHR.responseText) : {};
 
                 deferred.reject(response);
             })
-            .always(function()
+            .always(() =>
             {
                 if (!config.doInBackground)
                 {
@@ -133,32 +137,20 @@ module.exports = (function($)
 
     function _printMessages(response)
     {
-        var notification;
+        let notification;
 
-        if (response.error && response.error.message.length > 0)
+        ["error", "success", "warning", "info"].forEach(logLevel =>
         {
-            notification = NotificationService.error(response.error);
-        }
+            if (response[logLevel] && response[logLevel].message.length > 0)
+            {
+                notification = NotificationService[logLevel](response[logLevel]);
+            }
+        });
 
-        if (response.success && response.success.message.length > 0)
-        {
-            notification = NotificationService.success(response.success);
-        }
-
-        if (response.warning && response.warning.message.length > 0)
-        {
-            notification = NotificationService.warning(response.warning);
-        }
-
-        if (response.info && response.info.message.length > 0)
-        {
-            notification = NotificationService.info(response.info);
-        }
-
-        if (response.debug && response.debug.class.length > 0)
+        if (notification && response.debug && response.debug.class.length > 0)
         {
             notification.trace(response.debug.file + "(" + response.debug.line + "): " + response.debug.class);
-            for (var i = 0; i < response.debug.trace.length; i++)
+            for (let i = 0; i < response.debug.trace.length; i++)
             {
                 notification.trace(response.debug.trace[i]);
             }
