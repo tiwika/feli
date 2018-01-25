@@ -116,7 +116,8 @@ Vue.component("quantity-input", {
         {
             if (isNaN(this.compValue))
             {
-                this.compValue = this.internalMin === 0 ? 0 : this.internalMin || 1;
+                this.compValue = !isNaN(this.internalMin) ? this.internalMin : 1;
+                // this.compValue = this.internalMin === 0 ? 0 : this.internalMin || 1;
             }
             else if (this.compValue < this.internalMin)
             {
@@ -158,7 +159,7 @@ Vue.component("quantity-input", {
 
         initDefaultVars()
         {
-            this.compTimeout = this.compTimeout === 0 ? 0 : this.compTimeout || 500;
+            this.compTimeout = !isNaN(this.compTimeout) ? this.compTimeout : 500;
             this.internalMin = this.compMin || 1;
             this.internalMax = this.compMax || 9999;
             this.compVertical = this.compVertical || false;
