@@ -141,50 +141,25 @@ Vue.component("create-update-address", {
 
         _syncOptionTypesAddressData()
         {
+            const typeMap = {
+                1: "vatNumber",
+                4: "telephone",
+                9: "birthday",
+                11: "title"
+            };
 
-            if (typeof this.addressData.options !== "undefined")
+            if (typeof this.addressData.options === "undefined")
             {
-                for (const optionType of this.addressData.options)
+                return;
+            }
+
+            for (const optionType of this.addressData.options)
+            {
+                const mappedType = typeMap[optionType.typeId];
+
+                if (this.addressData[mappedType] && this.addressData[mappedType] !== optionType.value)
                 {
-                    switch (optionType.typeId)
-                    {
-                    case 1:
-                        {
-                            if (this.addressData.vatNumber && this.addressData.vatNumber !== optionType.value)
-                            {
-                                optionType.value = this.addressData.vatNumber;
-                            }
-
-                            break;
-                        }
-
-                    case 9:
-                        {
-                            if (this.addressData.birthday && this.addressData.birthday !== optionType.value)
-                            {
-                                optionType.value = this.addressData.birthday;
-                            }
-                            break;
-                        }
-
-                    case 11:
-                        {
-                            if (this.addressData.title && this.addressData.title !== optionType.value)
-                            {
-                                optionType.value = this.addressData.title;
-                            }
-                            break;
-                        }
-
-                    case 4:
-                        {
-                            if (this.addressData.telephone && this.addressData.telephone !== optionType.value)
-                            {
-                                optionType.value = this.addressData.telephone;
-                            }
-                            break;
-                        }
-                    }
+                    optionType.value = this.addressData[mappedType];
                 }
             }
         },
