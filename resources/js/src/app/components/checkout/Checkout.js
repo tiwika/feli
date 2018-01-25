@@ -16,51 +16,53 @@ Vue.component("checkout", {
     {
         this.$options.template = this.template;
         this.$store.dispatch("setCheckout", this.initialCheckout);
-        this.addEventHandler();
+
+        ApiService.listen("CheckoutChanged", event =>
+        {
+            if (!this.isEquals(this.checkout.payment.methodOfPaymentList, event.checkout.paymentDataList, "id"))
+            {
+                NotificationService.info(Translations.Template.orderMethodOfPaymentListChanged);
+                this.$store.commit("setMethodOfPaymentList", event.checkout.paymentDataList);
+            }
+        });
+
+        ApiService.listen("CheckoutChanged", event =>
+        {
+            if (this.hasShippingProfileListChanged(this.checkout.shipping.shippingProfileList, event.checkout.shippingProfileList))
+            {
+                this.$store.commit("setShippingProfileList", event.checkout.shippingProfileList);
+            }
+        });
+
+        ApiService.listen("CheckoutChanged", event =>
+        {
+            if (this.checkout.payment.methodOfPaymentId !== event.checkout.methodOfPaymentId)
+            {
+                NotificationService.warn(Translations.Template.orderMethodOfPaymentChanged);
+                this.$store.commit("setMethodOfPayment", event.checkout.methodOfPaymentId);
+            }
+        });
+
+        ApiService.listen("CheckoutChanged", event =>
+        {
+            if (this.checkout.shipping.shippingProfileId !== event.checkout.shippingProfileId)
+            {
+                NotificationService.warn(Translations.Template.orderShippingProfileChanged);
+                this.$store.commit("setShippingProfile", event.checkout.shippingProfileId);
+            }
+        });
+
+        ApiService.listen("CheckoutChanged", event =>
+        {
+            if (this.checkout.shipping.shippingCountryId !== event.checkout.shippingCountryId)
+            {
+                this.$store.commit("setShippingCountryId", event.checkout.shippingCountryId);
+            }
+        });
     },
 
     methods:
     {
-        addEventHandler()
-        {
-            ApiService.listen("CheckoutChanged",
-                checkout =>
-                {
-                    this.handleCheckoutChangedEvent(checkout.checkout);
-                });
-        },
-
-        handleCheckoutChangedEvent(checkout)
-        {
-            if (!this.isEquals(this.checkout.payment.methodOfPaymentList, checkout.paymentDataList, "id"))
-            {
-                NotificationService.info(Translations.Template.orderMethodOfPaymentListChanged);
-                this.$store.commit("setMethodOfPaymentList", checkout.paymentDataList);
-            }
-
-            if (this.hasShippingProfileListChanged(this.checkout.shipping.shippingProfileList, checkout.shippingProfileList))
-            {
-                this.$store.commit("setShippingProfileList", checkout.shippingProfileList);
-            }
-
-            if (this.checkout.payment.methodOfPaymentId !== checkout.methodOfPaymentId)
-            {
-                NotificationService.warn(Translations.Template.orderMethodOfPaymentChanged);
-                this.$store.commit("setMethodOfPayment", checkout.methodOfPaymentId);
-            }
-
-            if (this.checkout.shipping.shippingProfileId !== checkout.shippingProfileId)
-            {
-                NotificationService.warn(Translations.Template.orderShippingProfileChanged);
-                this.$store.commit("setShippingProfile", checkout.shippingProfileId);
-            }
-
-            if (this.checkout.shipping.shippingCountryId !== checkout.shippingCountryId)
-            {
-                this.$store.commit("setShippingCountryId", checkout.shippingCountryId);
-            }
-        },
-
         hasShippingProfileListChanged(oldList, newList)
         {
             if (oldList.length !== newList.length)
