@@ -80,23 +80,10 @@ const getters =
             }
 
             const calculatedPrices = state.variation.documents[0].data.prices;
-            const graduatedPrices = calculatedPrices.graduatedPrices;
-
-            let returnPrice;
-
-            if (graduatedPrices && graduatedPrices[0])
-            {
-                const prices = graduatedPrices.filter(price =>
-                {
-                    return parseFloat(state.variationOrderQuantity) >= price.minimumOrderQuantity;
-                });
-
-                if (prices[0])
-                {
-                    returnPrice = prices.reduce((prev, current) => (prev.minimumOrderQuantity > current.minimumOrderQuantity) ? prev : current);
-                    // returnPrice = returnPrice.unitPrice.value;
-                }
-            }
+            const graduatedPrices = calculatedPrices.graduatedPrices || [];
+            const returnPrice = graduatedPrices
+                .filter(price => parseFloat(state.variationOrderQuantity) >= price.minimumOrderQuantity)
+                .reduce((prev, current) => (prev.minimumOrderQuantity > current.minimumOrderQuantity) ? prev : current);
 
             return returnPrice || calculatedPrices.default;
         },
