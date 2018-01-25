@@ -47,7 +47,7 @@ Vue.component("order-history", {
         {
             for (const paymentState in paymentStates)
             {
-                if (paymentStates[paymentState].typeId == 4)
+                if (parseInt(paymentStates[paymentState].typeId) === 4)
                 {
                     return Translations.Template["paymentStatus_" + paymentStates[paymentState].value];
                 }
