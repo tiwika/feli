@@ -1,6 +1,8 @@
 const ApiService = require("services/ApiService");
 const NotificationService = require("services/NotificationService");
 
+import TranslationService from "services/TranslationService";
+
 Vue.component("checkout", {
 
     props: [
@@ -21,8 +23,10 @@ Vue.component("checkout", {
         {
             if (!this.isEquals(this.checkout.payment.methodOfPaymentList, event.checkout.paymentDataList, "id"))
             {
-                NotificationService.info(Translations.Template.orderMethodOfPaymentListChanged);
-                this.$store.commit("setMethodOfPaymentList", event.checkout.paymentDataList);
+                NotificationService.info(
+                    TranslationService.translate("Ceres::Template.orderMethodOfPaymentListChanged")
+                );
+                this.$store.commit("setMethodOfPaymentList", checkout.paymentDataList);
             }
         });
 
@@ -38,8 +42,10 @@ Vue.component("checkout", {
         {
             if (this.checkout.payment.methodOfPaymentId !== event.checkout.methodOfPaymentId)
             {
-                NotificationService.warn(Translations.Template.orderMethodOfPaymentChanged);
-                this.$store.commit("setMethodOfPayment", event.checkout.methodOfPaymentId);
+                NotificationService.warn(
+                    TranslationService.translate("Ceres::Template.orderMethodOfPaymentChanged")
+                );
+                this.$store.commit("setMethodOfPayment", checkout.methodOfPaymentId);
             }
         });
 
@@ -47,8 +53,10 @@ Vue.component("checkout", {
         {
             if (this.checkout.shipping.shippingProfileId !== event.checkout.shippingProfileId)
             {
-                NotificationService.warn(Translations.Template.orderShippingProfileChanged);
-                this.$store.commit("setShippingProfile", event.checkout.shippingProfileId);
+                NotificationService.warn(
+                    TranslationService.translate("Ceres::Template.orderShippingProfileChanged")
+                );
+                this.$store.commit("setShippingProfile", checkout.shippingProfileId);
             }
         });
 
@@ -67,7 +75,9 @@ Vue.component("checkout", {
         {
             if (oldList.length !== newList.length)
             {
-                NotificationService.info(Translations.Template.orderShippingProfileListChanged);
+                NotificationService.info(
+                    TranslationService.translate("Ceres::Template.orderShippingProfileListChanged")
+                );
                 return true;
             }
 
@@ -78,12 +88,16 @@ Vue.component("checkout", {
             {
                 if (oldList[index].parcelServicePresetId !== newList[index].parcelServicePresetId)
                 {
-                    NotificationService.info(Translations.Template.orderShippingProfileListChanged);
+                    NotificationService.info(
+                        TranslationService.translate("Ceres::Template.orderShippingProfileListChanged")
+                    );
                     return true;
                 }
                 else if (oldList[index].shippingAmount !== newList[index].shippingAmount)
                 {
-                    NotificationService.info(Translations.Template.orderShippingProfilePriceChanged);
+                    NotificationService.info(
+                        TranslationService.translate("Ceres::Template.orderShippingProfilePriceChanged")
+                    );
                     return true;
                 }
             }

@@ -3,6 +3,7 @@ const ModalService = require("services/ModalService");
 const AddressFieldService = require("services/AddressFieldService");
 
 import ValidationService from "services/ValidationService";
+import TranslationService from "services/TranslationService";
 
 const ModalType = {
     INITIAL:    "initial",
@@ -18,20 +19,20 @@ const AddressType = {
 
 const ModalHeadlineMap = {
     initial: {
-        1: Translations.Template.orderInvoiceAddressInitial,
-        2: Translations.Template.orderInvoiceAddressInitial
+        1: "Ceres::Template.orderInvoiceAddressInitial",
+        2: "Ceres::Template.orderInvoiceAddressInitial"
     },
     create: {
-        1: Translations.Template.orderInvoiceAddressCreate,
-        2: Translations.Template.orderShippingAddressCreate
+        1: "Ceres::Template.orderInvoiceAddressCreate",
+        2: "Ceres::Template.orderShippingAddressCreate"
     },
     update: {
-        1: Translations.Template.orderInvoiceAddressEdit,
-        2: Translations.Template.orderShippingAddressEdit
+        1: "Ceres::Template.orderInvoiceAddressEdit",
+        2: "Ceres::Template.orderShippingAddressEdit"
     },
     delete: {
-        1: Translations.Template.orderInvoiceAddressDelete,
-        2: Translations.Template.orderShippingAddressDelete
+        1: "Ceres::Template.orderInvoiceAddressDelete",
+        2: "Ceres::Template.orderShippingAddressDelete"
     }
 };
 
@@ -294,11 +295,15 @@ Vue.component("address-select", {
         {
             if (ModalHeadlineMap[this.modalType] && ModalHeadlineMap[this.modalType][this.addressType])
             {
-                this.headline = ModalHeadlineMap[this.modalType][this.addressType];
+                this.headline = TranslationService.translate(
+                    ModalHeadlineMap[this.modalType][this.addressType]
+                );
             }
             else
             {
-                this.headline = ModalHeadlineMap[ModalType.INITIAL][AddressType.INVOICE];
+                this.headline = TranslationService.translate(
+                    ModalHeadlineMap[ModalType.INITIAL][AddressType.INVOICE]
+                );
             }
         },
 

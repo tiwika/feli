@@ -1,6 +1,8 @@
 const ApiService = require("services/ApiService");
 const NotificationService = require("services/NotificationService");
 
+import TranslationService from "services/TranslationService";
+
 Vue.component("place-order", {
 
     delimiters: ["${", "}"],
@@ -65,7 +67,9 @@ Vue.component("place-order", {
             }
             else
             {
-                NotificationService.error(Translations.Template.generalCheckEntries);
+                NotificationService.error(
+                    TranslationService.translate("Ceres::Template.generalCheckEntries")
+                );
                 this.waiting = false;
             }
         },
