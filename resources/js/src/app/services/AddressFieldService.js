@@ -1,18 +1,20 @@
+import {isNullOrUndefined}from "../helper/utils";
+
 export function isAddressFieldEnabled(countryId, addressType, field)
 {
     let address = {};
     let enabledFields = {};
 
-    if (typeof countryId === "undefined")
+    if (isNullOrUndefined(countryId))
     {
         countryId = 1;
     }
 
-    if (addressType === "1")
+    if (parseInt(addressType) === 1)
     {
         address = "billing_address";
 
-        if (countryId === 1)
+        if (parseInt(countryId) === 1)
         {
             enabledFields = App.config.enabledBillingAddressFields;
         }
@@ -25,7 +27,7 @@ export function isAddressFieldEnabled(countryId, addressType, field)
     {
         address = "delivery_address";
 
-        if (countryId === "1")
+        if (parseInt(countryId) === 1)
         {
             enabledFields = App.config.enabledDeliveryAddressFields;
         }
@@ -39,15 +41,7 @@ export function isAddressFieldEnabled(countryId, addressType, field)
 
     const fullField = address + "." + field;
 
-    for (const enabledField of enabledFields)
-    {
-        if (enabledField === fullField)
-        {
-            return true;
-        }
-    }
-
-    return false;
+    return enabledFields.some(enabledField => enabledField === fullField);
 }
 
 export default {isAddressFieldEnabled};
