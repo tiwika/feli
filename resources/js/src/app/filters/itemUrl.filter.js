@@ -1,21 +1,10 @@
+import {URL}from "../helper/url";
+
 Vue.filter("itemURL", function(item)
 {
-    const enableOldUrlPattern = App.config.enableOldUrlPattern === "true";
-    const urlPath = item.texts.urlPath || "";
-
-    let link = "";
-
-    if (urlPath.charAt(0) !== "/")
-    {
-        link = "/";
-    }
-
-    if (urlPath && urlPath.length)
-    {
-        link += urlPath;
-    }
-
-    let suffix = "";
+    const enableOldUrlPattern   = App.config.enableOldUrlPattern === "true";
+    const url                   = new URL(item.texts.urlPath);
+    let suffix                  = "";
 
     if (enableOldUrlPattern)
     {
@@ -25,6 +14,8 @@ Vue.filter("itemURL", function(item)
     {
         suffix = "_" + item.item.id + "_" + item.variation.id;
     }
+
+    const link = url.toAbsolute();
 
     if (link.substr(link.length - suffix.length, suffix.length) === suffix)
     {
