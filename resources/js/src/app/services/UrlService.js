@@ -4,14 +4,13 @@ export function getUrlParams(urlParams)
 {
     if (urlParams)
     {
-        var tokens;
-        var params = {};
-        var regex = /[?&]?([^=]+)=([^&]*)/g;
+        let tokens;
+        const params = {};
+        const regex = /[?&]?([^=]+)=([^&]*)/g;
 
         urlParams = urlParams.split("+").join(" ");
 
-        // eslint-disable-next-line
-        while (tokens = regex.exec(urlParams))
+        while ((tokens = regex.exec(urlParams)) !== null)
         {
             params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
         }
@@ -24,16 +23,16 @@ export function getUrlParams(urlParams)
 
 export function setUrlParams(urlParams)
 {
-    var pathName = window.location.pathname;
-    var params = $.isEmptyObject(urlParams) ? "" : "?" + $.param(urlParams);
-    var titleElement = document.getElementsByTagName("title")[0];
+    const pathName = window.location.pathname;
+    const params = $.isEmptyObject(urlParams) ? "" : "?" + $.param(urlParams);
+    const titleElement = document.getElementsByTagName("title")[0];
 
     window.history.replaceState({}, titleElement ? titleElement.innerHTML : "", pathName + params);
 }
 
 export function setUrlParam(key, value)
 {
-    var urlParams = getUrlParams(document.location.search);
+    const urlParams = getUrlParams(document.location.search);
 
     if (value !== null)
     {
