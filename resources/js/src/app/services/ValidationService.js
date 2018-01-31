@@ -110,6 +110,7 @@ function _validateElement(elem)
     }) || ["text"];
     let hasError       = false;
 
+    // eslint-disable-next-line
     _findFormControls($elem).each(function(i, formControl)
     {
         const $formControl  = $(formControl);
