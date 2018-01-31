@@ -23,7 +23,7 @@ module.exports = (function($)
 
     function trigger()
     {
-        for (var i = 0; i < handlerList.length; i++)
+        for (let i = 0; i < handlerList.length; i++)
         {
             handlerList[i].call({}, notifications.all());
         }
@@ -31,13 +31,14 @@ module.exports = (function($)
 
     function _log(message, prefix)
     {
-        var notification = new Notification(message);
+        const notification = new Notification(message);
 
         if (App.config.logMessages)
         {
+            // eslint-disable-next-line
             console.log((prefix || "") + "[" + notification.code + "] " + notification.message);
 
-            for (var i = 0; i < notification.stackTrace.length; i++)
+            for (let i = 0; i < notification.stackTrace.length; i++)
             {
                 _log(notification.stackTrace[i], " + ");
             }
@@ -48,7 +49,7 @@ module.exports = (function($)
 
     function _info(message)
     {
-        var notification = new Notification(message, "info");
+        const notification = new Notification(message, "info");
 
         if (App.config.printInfos)
         {
@@ -60,7 +61,7 @@ module.exports = (function($)
 
     function _warn(message)
     {
-        var notification = new Notification(message, "warning");
+        const notification = new Notification(message, "warning");
 
         if (App.config.printWarnings)
         {
@@ -72,7 +73,7 @@ module.exports = (function($)
 
     function _error(message)
     {
-        var notification = new Notification(message, "danger");
+        const notification = new Notification(message, "danger");
 
         if (App.config.printErrors)
         {
@@ -84,7 +85,7 @@ module.exports = (function($)
 
     function _success(message)
     {
-        var notification = new Notification(message, "success");
+        const notification = new Notification(message, "success");
 
         if (App.config.printSuccess)
         {
@@ -115,13 +116,22 @@ module.exports = (function($)
         {
             data.stackTrace = [];
         }
-        var id   = notificationCount++;
-        var self = {
+        const id   = notificationCount++;
+        const defaultData = Object.assign(
+            {
+                code:       0,
+                msssage:    "",
+                stackTrace: []
+            },
+            data
+        );
+
+        const self = {
             id        : id,
-            code      : data.code || 0,
-            message   : data.message || data || "",
+            code      : defaultData.code,
+            message   : defaultData.message,
             context   : context || "info",
-            stackTrace: data.stackTrace || [],
+            stackTrace: defaultData.stackTrace,
             close     : close,
             closeAfter: closeAfter,
             trace     : trace
@@ -158,7 +168,7 @@ module.exports = (function($)
 
     function NotificationList()
     {
-        var elements = [];
+        const elements = [];
 
         return {
             all   : all,
@@ -178,7 +188,7 @@ module.exports = (function($)
 
         function remove(notification)
         {
-            for (var i = 0; i < elements.length; i++)
+            for (let i = 0; i < elements.length; i++)
             {
                 if (elements[i].id === notification.id)
                 {
