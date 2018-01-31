@@ -5,7 +5,7 @@ export function isNull(object)
 
 export function isUndefined(object)
 {
-    //eslint-disable-next-line
+    // eslint-disable-next-line no-void
     return typeof object === typeof void 0;
 }
 
