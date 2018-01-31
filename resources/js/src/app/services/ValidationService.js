@@ -169,7 +169,7 @@ function _validateSelect($formControl, validationKey)
     return $.trim($formControl.val()) !== validationKey;
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line complexity
 function _validateInput($formControl, validationKey)
 {
     switch (validationKey)
