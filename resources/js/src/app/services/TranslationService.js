@@ -1,5 +1,6 @@
 import {isNullOrUndefined}from "../helper/utils";
 import {replaceAll, capitalize}from "../helper/strings";
+import {parseJSON}from "../helper/json";
 
 const TranslationService = (function($)
 {
@@ -27,33 +28,33 @@ const TranslationService = (function($)
             }
 
             const match = identifierPattern.exec(identifier);
-            const namespace = match[1];
-            const group = match[2];
+            const values = parseJSON(tags[i].innerHTML);
 
-            if (_translations.hasOwnProperty(namespace))
+            if (values !== null)
             {
-                console.warn("Cannot override namespace \"" + namespace + "\"");
-                continue;
+                _storeTranslations(match[1], match[2], values);
             }
-
-            _translations[namespace] = {};
-
-            if (_translations[namespace].hasOwnProperty(group))
-            {
-                console.warn("Cannot override group \"" + namespace + "::" + group);
-                continue;
-            }
-
-            try
-            {
-                _translations[namespace][group] = JSON.parse(tags[i].innerHTML);
-            }
-            catch (err)
+            else
             {
                 console.error("Error while parsing translations (" + identifier + ")");
             }
-
         }
+    }
+
+    function _storeTranslations(namespace, group, translations)
+    {
+        if (isNullOrUndefined(_translations[namespace]))
+        {
+            _translations[namespace] = {};
+        }
+
+        if (!isNullOrUndefined(_translations[namespace][group]))
+        {
+            console.warn("Cannot override group \"" + namespace + "::" + group);
+            return;
+        }
+
+        _translations[namespace][group] = translations;
     }
 
     function _translate(key, params)
