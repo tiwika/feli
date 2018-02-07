@@ -2,6 +2,7 @@
 
 {% import "Ceres::PageDesign.Macros.IncludeComponents" as Loader %}
 {% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
+{% import "Ceres::PageDesign.Macros.Translations" as Translations %}
 {{ component( "Ceres::PageDesign.Components.Notifications" ) }}
 {{ component( "Ceres::Basket.Components.BasketPreview" ) }}
 {{ component( "Ceres::Customer.Components.Login" ) }}
@@ -26,8 +27,13 @@
     {{ services.crossSelling.setType(config("Ceres.item.lists.cross_selling_type")) }}
 {% endif %}
 
+{% set showCategoryTypes = config('Ceres.header.show_category_types') %}
+{% if showCategoryTypes | trim is empty %}
+    {% set showCategoryTypes = "all" %}
+{% endif %}
+
 {{ services.performance.start('PageDesign.getNavigationTree') }}
-{% set categories = services.category.getNavigationTree("item", lang, 6) %}
+{% set categories = services.category.getNavigationTree(showCategoryTypes, lang, 6) %}
 {{ services.performance.track('PageDesign.getNavigationTree') }}
 
 <html lang="{{ lang }}" data-framework="vue" prefix="og: http://ogp.me/ns#">
@@ -121,7 +127,7 @@
                 <!-- ./REGISTRATION MODAL -->
 
                 <!-- BASKET MODAL -->
-                <add-item-to-basket-overlay template="#vue-add-item-to-basket-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}" :config-item-name="parseInt({{ config("Ceres.item.name") | json_encode }})"></add-item-to-basket-overlay>
+                <add-item-to-basket-overlay template="#vue-add-item-to-basket-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}"></add-item-to-basket-overlay>
                 <!-- ./BASKET MODAL -->
 
                 <!-- SHIPPINGCOSTS MODAL -->
@@ -154,17 +160,12 @@
         {{ LayoutContainer.show("Ceres::Script.Loader") }}
 
         {{ perfservices.performanceormance.trackRuntime('PageDesign.ScriptLoad.Start') }}
+        {{ Translations.add( "Ceres", "Template" ) }}
         {% if config("Ceres.log.performance.level") == 'development' %}
-            <script src="{{ plugin_path('Ceres') }}/js/lang/{{ lang }}.js"></script>
-            <script>var Translations = Languages['{{ lang }}'];</script>
             <script src="{{ plugin_path('Ceres') }}/js/dist/ceres-vendor.js"></script>
             <script src="{{ plugin_path('Ceres') }}/js/src/app.config.js"></script>
             <script src="{{ plugin_path('Ceres') }}/js/dist/ceres-app.js"></script>
         {% else %}
-            {# TODO remove douplicate import #}
-            <script src="{{ plugin_path('Ceres') }}/js/lang/{{ lang }}.js"></script>
-            <script>var Translations = Languages['{{ lang }}'];</script>
-
             <script src="{{ plugin_path('Ceres') }}/js/dist/ceres.min.js"></script>
         {% endif %}
         {{ services.performance.trackRuntime('PageDesign.ScriptLoad.End') }}
@@ -192,13 +193,13 @@
 
             if ( vueApp.$el.id !== "vue-app")
             {
-                rootElement.remove();
+                rootElement.parentNode.removeChild(rootElement);
                 errorElement.style.display = "block";
             }
             else
             {
                 document.body.replaceChild( vueApp.$el, rootElement );
-                errorElement.remove();
+                errorElement.parentNode.removeChild(errorElement);
             }
         </script>
     </body>
