@@ -6,6 +6,7 @@
 
 - **SEO:** Auf der **Startseite** wird nun der Shop Name als h1-Überschrift ausgegeben.
 
+
 ### Behoben
 
 - Die Artikel im Slider auf der **Startseite** werden nun korrekt ausgegeben.
