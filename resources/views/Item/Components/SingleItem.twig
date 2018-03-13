@@ -51,6 +51,8 @@
                         <order-properties template="#vue-order-properties" v-if="currentVariation.filter.isSalable"></order-properties>
                     </div>
 
+                    <variation-properties :variation-properties="currentVariation.variationProperties" :variation-property-groups="currentVariation.variationPropertyGroups"></variation-properties>
+
                     <graduated-prices template="#vue-graduated-prices"></graduated-prices>
 
                     {% if ('item.recommendedPrice' in itemData or 'all' in itemData) %}

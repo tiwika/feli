@@ -1,0 +1,15 @@
+<script type="x/template" id="vue-variation-properties">
+    <div>
+
+    <ul>
+        <li v-for="property in ungroupedProperties">${ property.property.names.name }</li>
+    </ul>
+
+        <div v-for="group in sortedPropertyGroups" :key="group.id">
+            <div>${ group.names.name }</div>
+            <ul>
+                <li v-for="property in getPropertiesByGroupId(group.id)" :key="property.property.id">${ property.property.names.name }</li>
+            </ul>
+        </div>
+    </div>
+</script>
