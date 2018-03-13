@@ -94,6 +94,12 @@ const actions =
     {
         loadBasketData({commit, state})
         {
+            ApiService.get("/rest/io/basket")
+                .done(basket =>
+                {
+                    commit("setBasket", basket);
+                });
+
             if (state.data.itemQuantity)
             {
                 ApiService.get("/rest/io/basket/items", {template: "Ceres::Basket.Basket"})

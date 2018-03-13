@@ -54,10 +54,7 @@
             {% endif %}
             {% if ceresConfig.basket.previewType == "right" %}
                 <div class="wrapper wrapper-right">
-                    <basket-preview
-                        template="#vue-basket-preview"
-                        :basket-data="{{ basket | json_encode() }}">
-                    </basket-preview>
+                    <basket-preview template="#vue-basket-preview"></basket-preview>
                 </div>
             {% endif %}
 

@@ -5,8 +5,7 @@ Vue.component("basket-preview", {
     delimiters: ["${", "}"],
 
     props: [
-        "template",
-        "basketData"
+        "template"
     ],
 
     computed: Vuex.mapState({
@@ -18,7 +17,6 @@ Vue.component("basket-preview", {
     created()
     {
         this.$options.template = this.template;
-        this.$store.commit("setBasket", this.basketData);
         this.$store.dispatch("loadBasketData");
     },
 
