@@ -1,4 +1,4 @@
-import {dynamicArraySort}from "@/../helper/utils";
+import {dynamicArraySort}from "../../helper/utils";
 
 Vue.component("variation-properties", {
 
@@ -31,7 +31,7 @@ Vue.component("variation-properties", {
 
         ungroupedProperties()
         {
-            const ungroupedProperties = this.variationProperties.filter(property => !property.property.groups.length);
+            const ungroupedProperties = this.variationProperties.filter(property => !property.property.groups.length && property.property.display.includes("showOnItemsPage"));
 
             return dynamicArraySort(ungroupedProperties, "position");
         }
@@ -48,7 +48,7 @@ Vue.component("variation-properties", {
         {
             const propertiesByGroup = this.variationProperties.filter(property =>
             {
-                return !!property.property.groups.find(group => group.id === groupId);
+                return !!property.property.groups.find(group => group.id === groupId && property.property.display.includes("showOnItemsPage"));
             });
 
             return propertiesByGroup.sort((propA, propB) =>
