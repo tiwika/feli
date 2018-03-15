@@ -1,14 +1,20 @@
 <script type="x/template" id="vue-variation-properties">
     <div>
-        <ul>
-            <li v-for="property in ungroupedProperties">${ property.property.names.name }</li>
+        <ul class="p-a-0" style="list-style: none">
+            <li style="letter-spacing: .75px;" v-for="property in ungroupedProperties">
+                <i class="fa fa-check-square-o fa-fw text-primary"></i>
+                ${ property.property.names.name }
+            </li>
         </ul>
 
         <template v-for="group in sortedPropertyGroups">
             <div v-if="getPropertiesByGroupId(group.id).length" :key="group.id">
-                <div>${ group.names.name }</div>
-                <ul>
-                    <li v-for="property in getPropertiesByGroupId(group.id)" :key="property.property.id">${ property.property.names.name }</li>
+                <div style="letter-spacing: .75px;">${ group.names.name }</div>
+                <ul class="p-a-0" style="list-style: none">
+                    <li style="letter-spacing: .75px;" v-for="property in getPropertiesByGroupId(group.id)" :key="property.property.id">
+                        <i class="fa fa-check-square-o fa-fw text-primary"></i>
+                        ${ property.property.names.name }
+                    </li>
                 </ul>
             </div>
         </template>
