@@ -48,6 +48,124 @@
 						"tooltip": "Enable Callisto route pattern for items",
 						"defaultValue": false
 					}
+				},
+				"global.shop_mail": {
+					"type": "inputText",
+					"required": false,
+					"label": "Contact form email address",
+					"options": {
+						"tooltip": "Contact form email address",
+						"defaultValue": "your@email.com"
+					}
+				},
+				"global.opening_times": {
+					"type": "inputText",
+					"required": false,
+					"label": "Opening hours (DE)",
+					"options": {
+						"tooltip": "Opening hours (DE)",
+						"defaultValue": "Montag - Freitag, 00:00 - 24:00"
+					}
+				},
+				"global.en.opening_times": {
+					"type": "inputText",
+					"required": false,
+					"label": "Opening hours (EN)",
+					"options": {
+						"tooltip": "Opening hours (EN)",
+						"defaultValue": "Montag - Freitag, 00:00 - 24:00"
+					}
+				},
+				"global.show_data": {
+					"type": "multiCheckBox",
+					"required": false,
+					"label": "Show contact data",
+					"options": {
+						"tooltip": "Show contact data",
+						"defaultValue": "street, zip, city, hotline, email, opening_times",
+						"checkBoxValues": [
+							{
+								"value": "name",
+								"caption": "Company"
+							},
+							{
+								"value": "ceo",
+								"caption": "CEO"
+							},
+							{
+								"value": "city",
+								"caption": "City"
+							},
+							{
+								"value": "email",
+								"caption": "Email"
+							},
+							{
+								"value": "fax",
+								"caption": "fax"
+							},
+							{
+								"value": "fon",
+								"caption": "Phone"
+							},
+							{
+								"value": "hotline",
+								"caption": "Hotline"
+							},
+							{
+								"value": "street",
+								"caption": "Street"
+							},
+							{
+								"value": "vatNumber",
+								"caption": "VAT Number"
+							},
+							{
+								"value": "timezone",
+								"caption": "Time zone"
+							},
+							{
+								"value": "opening_times",
+								"caption": "Opening hours"
+							}
+						]
+					}
+				},
+				"global.google_recaptcha_api_key": {
+					"type": "inputText",
+					"required": false,
+					"label": "Google reCAPTCHA website key",
+					"options": {
+						"tooltip": "Google reCAPTCHA website key",
+						"defaultValue": ""
+					}
+				},
+				"contact.api_key": {
+					"type": "inputText",
+					"required": false,
+					"label": "Google Maps API key",
+					"options": {
+						"tooltip": "Google Maps API key",
+						"defaultValue": "API key"
+					}
+				},
+				"contact.map_zoom": {
+					"type": "inputText",
+					"required": false,
+					"label": "Zoom level",
+					"options": {
+						"tooltip": "Zoom level",
+						"defaultValue": "16"
+					}
+				},
+				"contact.map_show_in_mobile": {
+					"type": "checkBox",
+					"required": false,
+					"label": "Show map in mobile view",
+					"options": {
+						"tooltip": "Show map in mobile view",
+						"defaultValue": false
+					}
 				}
 			}
 		},
