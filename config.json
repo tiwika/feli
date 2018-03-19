@@ -51,17 +51,25 @@
 				}
 			}
 		},
-		"additional": {
-			"label": "Weitere Einstellungen",
-			"menu": {
-				"language": {
-					"label": "Sprache",
-					"settings": {
+		"homepage": {
+			"label": "Homepage",
+			"settings": {
+				"default.homepage": {
+					"type": "checkBox",
+					"required": false,
+					"label": "Show default homepage",
+					"options": {
+						"tooltip": "Show default homepage",
+						"defaultValue": true
 					}
 				},
-				"moreSettings": {
-					"label": "MEhr Einstellungen",
-					"settings": {
+				"default.sliderItemId1": {
+					"type": "inputText",
+					"required": false,
+					"label": "ID of the item variation to display in the first slide of the image slider",
+					"options": {
+						"tooltip": "ID of the item variation to display in the first slide of the image slider",
+						"defaultValue": ""
 					}
 				}
 			}
