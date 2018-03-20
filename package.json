@@ -27,6 +27,7 @@
     "gulp-eslint": "^3.0.1",
     "gulp-ignore": "^2.0.1",
     "gulp-minify-css": "^1.2.4",
+    "gulp-postcss": "^7.0.1",
     "gulp-props": "^1.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
@@ -35,6 +36,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.7",
     "jquery-lazyload": "^1.9.7",
+    "postcss-custom-properties": "^7.0.0",
     "q": "^1.5.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^1.1.2"
