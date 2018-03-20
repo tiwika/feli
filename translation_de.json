@@ -1,0 +1,8 @@
+{
+	"global": {
+		"header_company_name": {
+			"tab": "Global",
+			"label": "Name of your store"
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"global": {
+		"tab": "Global",
+		"header_company_name": "Name of your store",
+		"header_company_logo": "URL to your company logo",
+		"global_shippingCostsCategoryId": "Category to display shipping information",
+		"global_default_contact_class_b2b": "Default customer class B2B",
+		"global_enableOldUrlPattern": "Enable Callisto route pattern for items",
+		"contact_shop_mail": "Contact form email address",
+		"contact_opening_times": "Opening hours (DE)",
+		"contact_en_opening_times": "Opening hours (EN)",
+		"contact_show_data": "Show contact data",
+		"contact_show_data_values": {
+			"name"                      : "Company",
+			"ceo"                       : "CEO",
+			"city"                      : "City",
+			"country"                   : "Country",
+			"email"                     : "Email",
+			"fax"                       : "Fax",
+			"fon"                       : "Phone",
+			"hotline"                   : "Hotline",
+			"street"                    : "Street",
+			"vatNumber"                 : "VAT number",
+			"zip"                       : "ZIP",
+			"timezone"                  : "Time zone",
+			"opening_times"             : "Opening hours"
+		}
+	}
+}
