@@ -1,8 +1,29 @@
 {
 	"global": {
-		"header_company_name": {
-			"tab": "Global",
-			"label": "Name of your store"
+		"tab": "Global",
+		"header_company_name": "Name Ihres Geschäfts",
+		"header_company_logo": "URL des Firmenlogos",
+		"global_shippingCostsCategoryId": "Kategorie für die Versandinformationen",
+		"global_default_contact_class_b2b": "Standard Kundenklasse für B2B",
+		"global_enableOldUrlPattern": "Callisto Routen dür Artikel aktivieren",
+		"contact_shop_mail": "Kontakt E-Mail-Adresse",
+		"contact_opening_times": "Öffnungszeiten (DE)",
+		"contact_en_opening_times": "Öffnungszeiten (EN)",
+		"contact_show_data": "Kontaktdaten anzeigen",
+		"contact_show_data_values": {
+			"name"                      : "Firma",
+			"ceo"                       : "CEO",
+			"city"                      : "Stadt",
+			"country"                   : "Land",
+			"email"                     : "E-Mail",
+			"fax"                       : "Fax",
+			"fon"                       : "Telefon",
+			"hotline"                   : "Hotline",
+			"street"                    : "Straße",
+			"vatNumber"                 : "Steuernummer",
+			"zip"                       : "PLZ",
+			"timezone"                  : "Zeitzone",
+			"opening_times"             : "Öffnungszeiten"
 		}
 	}
 }

@@ -125,31 +125,37 @@
     {
         "tab"       : {"de": "Homepage", "en": "Homepage"},
         "key"       : "homepage.sliderImageUrl1",
-        "label"     : "URL to the image of the first slide",
+        "label"     : {"de": "URL des ersten Bildes", "en": "URL to the image of the first slide"},
         "type"      : "text"
     },
     {
         "tab"       : {"de": "Homepage", "en": "Homepage"},
         "key"       : "homepage.sliderItemId2",
-        "label"     : "ID of the item variation to display in the second slide of the image slider",
+        "label"     : {
+            "de": "ID der Artikelvariation, die an zweiter Stelle im Image Slider angezeigt wird",
+            "en": "ID of the item variation to display in the second slide of the image slider"
+        },
         "type"      : "text"
     },
     {
         "tab"       : {"de": "Homepage", "en": "Homepage"},
         "key"       : "homepage.sliderImageUrl2",
-        "label"     : "URL to the image of the second slide",
+        "label"     : {"de": "URL des zweiten Bildes", "en": "URL to the image of the second slide"},
         "type"      : "text"
     },
     {
         "tab"       : {"de": "Homepage", "en": "Homepage"},
         "key"       : "homepage.sliderItemId3",
-        "label"     : "ID of the item variation to display in the third slide of the image slider",
+        "label"     : {
+            "de": "ID der Artikelvariation, die an dritter Stelle im Image Slider angezeigt wird",
+            "en": "ID of the item variation to display in the third slide of the image slider"
+        },
         "type"      : "text"
     },
     {
         "tab"       : {"de": "Homepage", "en": "Homepage"},
         "key"       : "homepage.sliderImageUrl3",
-        "label"     : "URL to the image of the third slide",
+        "label"     : {"de": "URL des dritten Bildes", "en": "URL to the image of the third slide"},
         "type"      : "text"
     },
     {
