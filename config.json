@@ -189,6 +189,51 @@
 						"tooltip": "ID of the item variation to display in the first slide of the image slider",
 						"defaultValue": ""
 					}
+				},
+				"default.sliderImageUrl1": {
+					"type": "inputFile",
+					"required": false,
+					"label": "URL to the image of the first slide",
+					"options": {
+						"tooltip": "URL to the image of the first slide",
+						"defaultValue": ""
+					}
+				},
+				"default.sliderItemId2": {
+					"type": "inputText",
+					"required": false,
+					"label": "ID of the item variation to display in the second slide of the image slider",
+					"options": {
+						"tooltip": "ID of the item variation to display in the second slide of the image slider",
+						"defaultValue": ""
+					}
+				},
+				"default.sliderImageUrl2": {
+					"type": "inputFile",
+					"required": false,
+					"label": "URL to the image of the second slide",
+					"options": {
+						"tooltip": "URL to the image of the second slide",
+						"defaultValue": ""
+					}
+				},
+				"default.sliderItemId3": {
+					"type": "inputText",
+					"required": false,
+					"label": "ID of the item variation to display in the third slide of the image slider",
+					"options": {
+						"tooltip": "ID of the item variation to display in the third slide of the image slider",
+						"defaultValue": ""
+					}
+				},
+				"default.sliderImageUrl3": {
+					"type": "inputFile",
+					"required": false,
+					"label": "URL to the image of the third slide",
+					"options": {
+						"tooltip": "URL to the image of the third slide",
+						"defaultValue": ""
+					}
 				}
 			}
 		}
