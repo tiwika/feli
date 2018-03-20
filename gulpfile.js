@@ -9,6 +9,8 @@ const OUTPUT_PREFIX = "ceres";
 // import gulp
 var gulp = require("gulp");
 var gutil = require("gulp-util");
+var postcss = require("gulp-postcss");
+var postCSSCustomProperties = require('postcss-custom-properties');
 var sourcemaps = require("gulp-sourcemaps");
 var concat = require("gulp-concat");
 var uglify = require("gulp-uglify");
@@ -152,12 +154,20 @@ gulp.task("build:lint", function()
 // SASS
 gulp.task("build:sass-min", ["build:sass"], function()
 {
-    return buildSass(OUTPUT_PREFIX + ".min.css", "compressed");
+    return buildSass(OUTPUT_PREFIX + ".min.css", "compressed")
+        .pipe( postcss([ postCSSCustomProperties() ]))
+        .pipe(gulp.dest(SCSS_DIST))
+        .pipe(minifyCSS())
+        .pipe(sourcemaps.write("."));
 });
 
 gulp.task("build:sass", function()
 {
-    return buildSass(OUTPUT_PREFIX + ".css", "expanded");
+    return buildSass(OUTPUT_PREFIX + ".css", "expanded")
+        .pipe( postcss([ postCSSCustomProperties() ]))
+        .pipe(gulp.dest(SCSS_DIST))
+        .pipe(minifyCSS())
+        .pipe(sourcemaps.write("."));
 });
 
 function buildSass(outputFile, outputStyle)
@@ -182,8 +192,6 @@ function buildSass(outputFile, outputStyle)
         .pipe(sass(config.scssOptions).on("error", sass.logError))
         .pipe(rename(outputFile))
         .pipe(autoprefixer(config.prefixOptions))
-        .pipe(minifyCSS())
-        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(SCSS_DIST));
 }
 
